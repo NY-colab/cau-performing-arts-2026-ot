@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#f8f7f3" />
+<meta name="description" content="『대중매체와 스토리텔링의 미래』 서문 OCR 원문을 문단별로 타이핑하며 정확도와 진행률을 확인하는 필사 연습장" />
+<title>스토리텔링의 역사 | 타이핑 필사 연습장</title>
+<style>
+:root{--bg:#f7f7f4;--paper:#ffffff;--ink:#222d34;--muted:#758087;--line:#e2e6e4;--accent:#187c6d;--accent-soft:#e8f4ef;--accent-deep:#116153;--rose:#b9544b;--rose-bg:#fff0ed;--gold:#bc8c40;--shadow:0 8px 32px rgba(31,52,44,.045);--font-size:19px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,'Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #8ecec2;outline-offset:2px}
+button:disabled{cursor:not-allowed;opacity:.4}
+.app{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;background:#fcfcfa;border-right:1px solid var(--line);padding:27px 19px 26px;display:flex;flex-direction:column;gap:20px;scrollbar-width:thin}
+.brand{display:flex;gap:10px;align-items:center;padding:2px 8px}
+.brand-icon{width:40px;height:40px;display:grid;place-items:center;background:var(--accent);color:white;border-radius:13px;font-family:Georgia,serif;font-size:22px}
+.brand h1{font-size:15px;margin:0 0 3px;letter-spacing:-.4px}.brand p{font-size:11px;color:var(--muted);margin:0;letter-spacing:.5px}
+.aside-card{padding:15px 15px 13px;border:1px solid var(--line);border-radius:16px;background:var(--paper)}
+.aside-heading{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.3px;margin:0 0 10px}
+.bigprogress{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}.bigprogress strong{font-size:23px;font-weight:800;font-variant-numeric:tabular-nums}.bigprogress span{font-size:11px;color:var(--muted)}
+.track{height:7px;background:#ebedeb;border-radius:10px;overflow:hidden}.track>i{display:block;height:100%;width:0;background:var(--accent);transition:width .18s;border-radius:9px}
+.sidebar-search{width:100%;height:39px;border:1px solid var(--line);background:white;border-radius:10px;padding:0 12px;outline:none}
+.sidebar-search::placeholder{color:#9da7a9}
+.side-heading{display:flex;justify-content:space-between;align-items:center;color:#74807b;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:0 10px}
+.chapter{margin-bottom:14px}.chapter-title{font-size:12px;font-weight:800;color:#566561;margin:0 0 5px;padding:7px 11px 3px;line-height:1.5;display:flex;justify-content:space-between;gap:8px}
+.chapter-title small{color:#a0aaa7;font-weight:600;white-space:nowrap}
+.item{border:0;background:transparent;border-radius:10px;padding:9px 10px;width:100%;text-align:left;display:flex;align-items:center;gap:10px;color:#63716e;transition:background .15s;line-height:1.35}
+.item:hover{background:#f0f5f2}.item.active{background:var(--accent-soft);color:var(--accent-deep);font-weight:800}
+.item-index{height:25px;min-width:27px;display:grid;place-items:center;border-radius:7px;background:#eff1ef;color:#87938e;font-size:11px;font-variant-numeric:tabular-nums}
+.item.active .item-index{background:#cde9dc;color:var(--accent-deep)}.item.done .item-index{background:var(--accent);color:#fff}
+.item-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.item small{font-size:10px;color:#a2aaa7}.item.done small{color:var(--accent)}
+.aside-bottom{margin-top:auto;border-top:1px solid var(--line);padding:18px 7px 0;color:var(--muted);font-size:11px;line-height:1.8}
+.aside-bottom button{border:0;background:none;color:var(--accent);padding:0;font-size:11px;text-decoration:underline;text-underline-offset:3px}
+.main{padding:31px 54px 85px;max-width:1320px;width:100%;margin:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:44px}.topbar-left{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}
+.topbar-left .slash{color:#c3cbc7}.topbar-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ghost{border:1px solid var(--line);background:white;color:#4b5857;border-radius:10px;min-height:35px;padding:7px 11px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.ghost:hover{border-color:#c4d9d1;background:#f7fbf8}.ghost:active{transform:translateY(1px)}.ghost.small{min-width:34px;padding:7px}
+.page-head .eyebrow{font-size:12px;color:var(--accent);font-weight:800;letter-spacing:1.1px;margin-bottom:11px}
+.page-head h2{font-family:'Noto Serif KR','Nanum Myeongjo',Georgia,serif;font-size:clamp(27px,3vw,36px);font-weight:700;letter-spacing:-1.7px;line-height:1.4;margin:0;word-break:keep-all}
+.page-head .sub{margin:12px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
+.source-badge{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border:1px solid #e4e9e5;border-radius:999px;color:#7a8880;font-size:11px;background:#fff}
+.lesson-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:20px;margin-bottom:22px}
+.notice{display:flex;align-items:flex-start;gap:9px;background:#fff9ed;border:1px solid #efdfba;border-radius:12px;color:#86672a;font-size:12px;line-height:1.65;padding:11px 14px;margin:0 0 22px}
+.notice::before{content:'!';display:grid;place-items:center;flex:none;width:19px;height:19px;border-radius:50%;background:#ead5a7;font-weight:900;color:#785822}
+.panel{border:1px solid var(--line);border-radius:18px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden}
+.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 23px;border-bottom:1px solid #edf0ed}
+.panel-title{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800}.round-number{display:grid;place-items:center;border-radius:8px;width:26px;height:26px;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:11px}
+.panel-actions{display:flex;align-items:center;gap:6px}
+.textlink{color:#71807a;border:0;background:none;padding:6px 4px;font-size:12px;font-weight:650}.textlink:hover{color:var(--accent)}
+.source-body{padding:28px 29px 33px;line-height:2.15;font-size:var(--font-size);word-break:keep-all;overflow-wrap:break-word;font-family:'Noto Serif KR','Nanum Myeongjo','Batang',Georgia,serif;white-space:pre-wrap;min-height:130px}
+.source-body.hidden{min-height:145px;display:flex;justify-content:center;align-items:center;background:#fafcf9;color:#9baa9e;font:500 13px sans-serif;padding:30px}
+.char{border-radius:2px}.char.correct{color:var(--accent);background:#f0f8f3}.char.wrong{color:#c84f49;background:#ffebe8;text-decoration:underline;text-decoration-color:#da7b71;text-underline-offset:5px}.char.cursor{background:#e1ede8;border-bottom:2px solid var(--accent)}
+.typing-panel{margin-top:18px}.typing-panel .panelhead{border-bottom:none;padding-bottom:13px}.typing-wrap{padding:0 23px 22px}
+#typing{display:block;width:100%;min-height:205px;border:1.5px solid #dee6e1;outline:0;border-radius:12px;background:#fafcf9;color:#283a34;padding:19px 19px;resize:vertical;font-family:'Noto Serif KR','Nanum Myeongjo','Batang',serif;font-size:var(--font-size);line-height:2.05;letter-spacing:0;word-break:keep-all;transition:border-color .15s,box-shadow .15s}
+#typing::placeholder{color:#aab7b0;font-size:15px}#typing:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(32,139,112,.08)}
+.typing-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:12px}
+.tip{font-size:12px;color:#91a099}.tip kbd{font-size:10px;border:1px solid #e2e8e4;background:white;border-radius:4px;padding:2px 4px;font-family:inherit}
+.typing-actions{display:flex;gap:13px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:19px 0 22px}
+.stat{border:1px solid var(--line);background:#fff;border-radius:13px;padding:15px 17px}.stat small{display:block;color:#8c9793;font-size:11px;font-weight:700;margin-bottom:9px}.stat strong{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}.stat .unit{font-size:11px;color:#a1aaa7;margin-left:3px}
+.nav-actions{display:flex;justify-content:space-between;align-items:center;gap:11px}.nav-buttons{display:flex;gap:9px}
+.primary{display:flex;align-items:center;gap:8px;justify-content:center;min-height:44px;border:1px solid var(--accent);background:var(--accent);color:white;border-radius:12px;padding:11px 18px;font-size:13px;font-weight:800}
+.primary:hover{background:var(--accent-deep)}.secondary{display:flex;align-items:center;gap:8px;justify-content:center;min-height:44px;border:1px solid #dce4df;background:#fff;color:#44534e;border-radius:12px;padding:11px 17px;font-size:13px;font-weight:750}
+.secondary:hover{background:#f6faf7}
+.footer{color:#a0aaa5;font-size:11px;line-height:1.9;text-align:center;margin-top:43px}
+.banner{margin-top:22px;border-radius:13px;padding:17px 19px;display:none;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid #d0e8dc;background:#e9f7ee;color:#276951}
+.banner strong{font-size:14px}.banner p{font-size:12px;margin:4px 0 0;color:#5d8370}
+.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:#243b31;color:#fff;padding:12px 20px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 30px #0002;transition:opacity .18s,transform .18s;z-index:10;max-width:calc(100vw - 35px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.mobile-top{display:none}.no-results{padding:15px 8px;color:#9fa9a4;font-size:12px;line-height:1.6}
+@media(max-width:1050px){.app{grid-template-columns:260px minmax(0,1fr)}.sidebar{padding:22px 14px}.main{padding:26px 28px 64px}.topbar{margin-bottom:34px}}
+@media(max-width:760px){.app{display:block}.sidebar{display:none;position:fixed;top:59px;bottom:0;left:0;height:auto;width:min(340px,90vw);z-index:20;box-shadow:40px 0 80px rgba(20,40,32,.12)}.sidebar.open{display:flex}.app.menu-open:before{content:'';position:fixed;inset:0;background:#1c33278a;z-index:15}.mobile-top{position:sticky;display:flex;top:0;z-index:12;background:#fcfcfa;border-bottom:1px solid var(--line);align-items:center;justify-content:space-between;padding:10px 16px;height:60px}.mobile-top .mobile-name{font-weight:850;letter-spacing:-.3px}.main{padding:25px 18px 60px}.topbar{margin-bottom:24px}.topbar-right .ghost{min-height:33px}.page-head h2{font-size:27px}.page-head .sub{font-size:12px}.panelhead{padding:14px 16px}.source-body{padding:19px 18px 24px;line-height:2.05;font-size:var(--font-size)}.typing-wrap{padding:0 14px 17px}#typing{min-height:185px;padding:13px 15px}.stats{grid-template-columns:repeat(2,1fr);gap:9px}.stat{padding:12px 14px}.stat strong{font-size:19px}.nav-actions{flex-wrap:wrap}.nav-buttons{width:100%}.nav-buttons button{flex:1}.tip kbd{display:none}.topbar-left{font-size:11px}.footer{margin-top:30px}.banner{margin-top:15px}}
+@media(max-width:380px){.topbar{align-items:flex-start;flex-direction:column;gap:10px}.page-head h2{font-size:24px}.panel-title{font-size:12px}.source-body{font-size:17px}.ghost{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app" class="app">
+  <header class="mobile-top"><button id="menu-toggle" class="ghost" type="button" aria-label="문단 목록 열기">☰ &nbsp;목록</button><div class="mobile-name">✍️ 스토리텔링 필사</div><span style="width:58px"></span></header>
+  <aside class="sidebar" id="sidebar" aria-label="문단 목록">
+    <div class="brand"><div class="brand-icon">S</div><div><h1>스토리텔링 필사 노트</h1><p>READ · TYPE · REMEMBER</p></div></div>
+    <section class="aside-card" aria-label="전체 학습 진행률"><div class="aside-heading">전체 학습 현황</div><div class="bigprogress"><strong id="overall-pct">0%</strong><span><span id="overall-done">0</span> / <span id="overall-total">0</span> 문단 완료</span></div><div class="track"><i id="overall-bar"></i></div><div style="color:#8a9690;font-size:10px;margin-top:10px">완료 기준: 원문과 완전히 일치</div></section>
+    <input type="search" id="search" class="sidebar-search" placeholder="문단 내용 검색..." aria-label="문단 검색" />
+    <div class="side-heading"><span>목차</span><span id="sidebar-count">19 PARAS</span></div>
+    <nav id="nav" aria-label="필사할 문단 선택"></nav>
+    <div class="aside-bottom"><strong style="color:#52645b">학습 데이터는 이 브라우저에만 저장됩니다.</strong><br/>인터넷이 끊겨도 파일로 열어 연습할 수 있어요.<br/><button id="export-data" type="button">내 필사 텍스트 내보내기 ↗</button><br/><button id="reset-all" type="button">전체 학습 기록 초기화</button></div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><div class="topbar-left"><span>서문</span><span class="slash">/</span><span id="crumb-chapter">대중매체와 스토리텔링의 미래</span></div><div class="topbar-right"><button class="ghost" id="font-minus" type="button" title="글자 작게">A−</button><button class="ghost" id="font-plus" type="button" title="글자 크게">A+</button><button class="ghost" id="toggle-source-top" type="button">원문 숨기기</button></div></div>
+    <section class="page-head"><div class="eyebrow">DAILY TYPING PRACTICE</div><h2 id="chapter-title">대중매체와 스토리텔링의 미래</h2><p class="sub">원문을 읽고 직접 타이핑하면서 스토리텔링의 역사를 익혀보세요.<br/>글자마다 실시간으로 일치 여부를 확인할 수 있습니다.</p></section>
+    <div class="lesson-meta"><span class="source-badge" id="paragraph-indicator">문단 01 / 19</span><span class="source-badge" id="source-name">첫 번째 이미지 · 왼쪽</span><span class="source-badge" id="target-count">원문 0자</span></div>
+    <div id="notice" class="notice" style="display:none"></div>
+    <section class="panel" aria-label="필사 원문"><div class="panelhead"><div class="panel-title"><span class="round-number">01</span><span>필사 원문</span></div><div class="panel-actions"><button class="textlink" id="copy-original" type="button">원문 복사</button><button class="textlink" id="toggle-source" type="button">숨기기</button></div></div><div id="source-text" class="source-body"></div></section>
+    <section class="panel typing-panel" aria-label="필사 입력"><div class="panelhead"><div class="panel-title"><span class="round-number">✎</span><span>나의 필사</span></div><div class="panel-actions"><button class="textlink" id="clear-current" type="button">현재 문단 지우기</button></div></div><div class="typing-wrap"><textarea id="typing" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="필사할 내용을 입력하세요" placeholder="여기에 원문을 보며 타이핑하세요. 입력한 내용은 자동 저장됩니다."></textarea><div class="typing-bottom"><div class="tip">자동 저장됨 · <kbd>Ctrl</kbd> + <kbd>Enter</kbd> 다음 문단</div><div class="typing-actions"><span id="save-status" style="font-size:11px;color:#91a099" aria-live="polite">준비됨</span></div></div></div></section>
+    <section class="stats" aria-label="현재 문단 필사 통계"><div class="stat"><small>일치 정확도</small><strong id="accuracy">—</strong><span class="unit">%</span></div><div class="stat"><small>입력 글자</small><strong id="typed-count">0</strong><span class="unit" id="typed-total">/ 0</span></div><div class="stat"><small>오타 · 불일치</small><strong id="errors">0</strong><span class="unit">자</span></div><div class="stat"><small>이번 문단 진행</small><strong id="para-progress">0</strong><span class="unit">%</span></div></section>
+    <div class="nav-actions"><button class="secondary" id="prev" type="button">← 이전 문단</button><div class="nav-buttons"><button class="secondary" id="show-answer" type="button">원문 보기</button><button class="primary" id="next" type="button">다음 문단 →</button></div></div>
+    <div id="completion" class="banner"><div><strong>✓ 이 문단을 정확하게 완성했어요!</strong><p>다음 문단으로 이동해 학습을 이어가세요.</p></div><button class="primary" id="complete-next" type="button">다음 문단으로 →</button></div>
+    <footer class="footer">원문: 사용자가 제공한 책 서문 이미지 2장 · 일부 문장 잘림 및 이미지 사이 누락 구간 있음<br/>필사 기록은 외부 서버로 전송되지 않으며 이 브라우저에만 저장됩니다.</footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const passages=[{"id":"p01","section":"대중매체와 스토리텔링의 미래","text":"언어에는 생로병사가 있다. 언어는 당대 대중의 심성과 기호와 풍속을 반영한다. 해당 분야의 탁월한 식견이 있는 전문가가 아니라면, 과거에 쓰던 고어를 쉽게 해석할 수 없는 까닭이 그것이다. 지금 젊은이들이 축약해 사용하는 시쳇말을 한 세대 앞선 기성세대가 즉시 알아들을 수 없는 까닭도 여기에 있다. 언어는 기호이며 상징이다. 말(word)과 말(horse), 눈(eyes)과 눈(snow)처럼 똑같이 생긴 단어라고 해도 발화되는 장단고저의 리듬과 파동에 따라서 그 뜻이 달라진다.","source":"첫 번째 이미지 · 왼쪽","note":""},{"id":"p02","section":"대중매체와 스토리텔링의 미래","text":"언어만 그런 것이 아니다. 스토리텔링도 이와 마찬가지로 변화를 겪어 왔다. 각각의 미디어는 저마다 고유한 방식으로 의사소통을 한다. 커뮤니케이션의 도구, 즉 매체가 달라지면 정보 전달 방식도 확연히 달라진다.","source":"첫 번째 이미지 · 왼쪽","note":""},{"id":"p03","section":"대중매체와 스토리텔링의 미래","text":"스토리텔링이라는 용어가 요즘처럼 인구에 회자된 적은 없다. 스토리텔링의 시대라고 해도 과언은 아니다. 너도 나도 스토리텔링을 말하지만 정작 스토리텔링이 무엇인지, 그 역사는 어디에서 출발했고, 또 어떻게 진화해 나간 것인지 설명하기는 쉽지 않다.","source":"첫 번째 이미지 · 왼쪽","note":""},{"id":"p04","section":"대중매체와 스토리텔링의 미래","text":"이 책은 인류의 위대한 여정인 스토리텔링의 역사를 추적하고자 기획되었다. 사실 문학의 역사, 연극의 역사, 영화의 역사, 소설의 역사, 방송의 역사 등 장르별 역사를 기록한 책은 많다. 광고의 역사와 게임의 역사를 기술한 책도 많다. 그러나 스토리텔링의 역사를 본격적으로 추적한 책은 드물다. 그 까닭은 무엇일까. 아마도 ‘스토리텔링’이라는 용어가 내포하고 있는 의미가 워낙 광대하며, 어느 한 장르에 쉬이 속할 수 없는 특성을 가졌기 때문일 것이다. 참고하자면 브라이언 보이드(Brian Boyd)의 『이야기의 기원(On the Origin of Stories)』(2009/2013)과 조너선 갓셜(Jonathan Gottschall)의 『스토리텔링 애니멀(The Storytelling Animal)』(2012/2014)이 그나마 인간의 이야기 본능을 잘 설명하고 있다.","source":"첫 번째 이미지 · 왼쪽","note":""},{"id":"p05","section":"대중매체와 스토리텔링의 미래","text":"스토리텔링이라는 용어는 마치 ‘시나리오’라는 용어와 그 용처가 유사하다. 시나리오는 흔히 영화의 각본(脚本)을 말한다. 영화각본은 스크린플레이(screenplay)라고 부른다. 무대가 아니라 스크린을 대상으로 쓴 희곡이라는 뜻이다. 우리나라에서도 시나리오는 협의로 영화각본을 뜻하고 TV 드라마는 극본(劇本)이라고 한다. 그러나 시나리오는 영화에서뿐만 아니라 정치, 경제, 국방, 공공 정책 및 사회문화 전반에 걸쳐 ‘전략 지침’이라는 뜻으로 두루 사용되고 있다. 따라서 혹자가 ‘시나리오의 역사’를 기술한다고 할 때 어느 방향으로 기술할지 그 방향과 영역을 분명히 규정하지 않고서는 집필하기가 매우 애매하다. 마찬가지로 ‘스토리텔링’이라는 용어도 포괄적 의미를 가지고 있기에 서술에 어려움을 겪을 수밖에 없다. 정치적 수사는 물론이거니와 경제학에서도 마케팅 기법의 일환으로 물건을 팔기 위해 스토리텔링 기법을 사용하고 있기 때문이다. 일례로 일본에서 큰 태풍의 영향으로 과일이 죄다 떨어져 큰 피해를 입게 되자, 마을 사람들 몇몇이 사활을 걸고 아이디어를 고안한 끝에 끝내 떨어지지 않고 매달려 있었던 사과에 ‘떨어지지 않는 사과’라는 사연을 입혀 시장에 내다 팔았고, 입시를 앞둔 많은 수험생 부모에게 비싼 가격으로 팔 수 있었다. 이처럼 마케팅에도 스토리텔링의 전략이 사용되는 것이 요즘 경향이다. 이렇게 볼 때 정치, 경제, 사회, 문화 등 모든 분야에 걸쳐 스토리텔링이라는 용어는 합당(合當)하게도 적용 가능하다.","source":"첫 번째 이미지 · 왼쪽→오른쪽","note":""},{"id":"p06","section":"대중매체와 스토리텔링의 미래","text":"따라서 스토리텔링의 역사를 한 권으로 요약한다는 것은 다소 무모한 시도일 수 있다. 그러므로 이 책에서는 ‘대중매체’를 나침반으로 사용하기로 했다. 저술의 방향과 목적이 흔들리지 않도록 하기 위해서다. 이러한 전제하에 스토리텔링은 “어떤 사연(stories)을, 어떤 매체(media)를 통해, 조리 있게 말하는 것(telling)”을 의미한다. 그리고 이를 통해 타인으로부터 정서적 반응 및 그로 인한 언행의 변화를 이끌어 내는 특별한 기술을 의미한다. 즉 어떤 ‘사연’이 타인에게 전달되는 과정에는 반드시 어떤 ‘매체’가 있게 마련이므로 그 흥미진진한 역사를 추적하려는 것이다.","source":"첫 번째 이미지 · 오른쪽","note":""},{"id":"p07","section":"대중매체와 스토리텔링의 미래","text":"따라서 이 책은 ‘매체를 통해 본 스토리텔링의 역사’라고 할 수 있다. 매체의 발달에 따라 인간의 의사소통 및 그 표현 양식이 달라져 왔으므로 매체 없이 스토리텔링의 역사를 논할 수 없는 까닭이다. 특히 연극, 소설, 영화, TV 드라마 등 픽션 장르는 그 이야기의 전달 매체를 둘러싸고 치열한 경쟁을 했다. 경쟁은 과학기술을 동원하면서까지 새로운 이야기 매체를 만들기에 이르렀고 그러자 더 색다른 방법으로 더 감동적인 이야기를 더 많이 생산하기 시작했다. 따라서 이 책에서는 스토리텔링의 역사를 매체 발달사와 함께 통사적으로 풀어낸다. 스토리텔링에 관해 연구하는 학자들이나 현장 작업자들이 쉽게 이해할 수 있도록 이야기하듯이 가급적 가벼운 언어로 풀어 썼다.","source":"첫 번째 이미지 · 오른쪽","note":""},{"id":"p08","section":"이야기하는 인간, 기록하는 인간","text":"인류를 지칭하는 말이 많다. 직립하는 인간이라는 뜻의 ‘호모에렉투스(Homo erectus)’, 능력 있는 사람이라는 뜻의 ‘호모하빌리스(Homo habilis)’, 도구를 사용하는 ‘호모파베르(Homo faber)’, 놀이하는 인간이라는 뜻을 가진 ‘호모루덴스(Homo ludens)’, 생각하는 슬기로운 인간은 ‘호모사피엔스사피엔스(Homo sapiens sapiens)’, 그리고 경제활동을 하는 인간을 지칭하는 ‘호모이코노미쿠스(Homo economicus)’, 아름다움을 추구하는 ‘호모에스테티쿠스(Homo aestheticus)’ 등이 있다. 그렇다면 이야기를 창작하고 그것을 기록하는 인간은 무엇이라고 부를까. 기록하는 자를 뜻하는 헬라어 ‘사페르(sapher)’는 어떨까. 혹은 ‘호모그래마투스(Homo grammartus)’라고 부를까. 필경한다는 뜻에서 온 ‘호모스크리벤스(Homo scribens)’는 어떨까. 그러나 굳이 스토리텔링을 의미하자면 허구와 상상과 수다를 즐기는 인간 ‘호모픽투스(Homo fictus)’가 가장 적합할 것이다.","source":"첫 번째 이미지 · 오른쪽","note":""},{"id":"p09","section":"이야기하는 인간, 기록하는 인간","text":"인류는 언제부터 이야기를 시작했고 또 그것을 기록으로 남기고자 했을까. 스토리텔링 최초의 단초는 알타미라(Altamira) 동굴이나 라스코(Lascaux) 동굴에 벽화로 새겨진 그림이 아닐까 생각한다. 고고학자들은 이러한 동굴 벽화가 기원전 약 2만5000~1만5000년 전의 것으로 추정하고 있다. 당시에도 물론 말은 있었겠지만 기록으로 남겨진 글이 없으니 그림들이 무엇을 뜻하는지 어림잡아 유추할 뿐이다. 우리나라의 울산 반구대 암각화도 선사시","source":"첫 번째 이미지 · 오른쪽 하단","note":"첫 번째 이미지의 마지막 문장이 「선사시」에서 잘립니다. 뒤에 이어지는 원문은 제공되지 않았습니다."},{"id":"p10","section":"스토리텔링의 미래 전망","text":"이다. 디지털 스토리텔링의 꽃이라고 말할 수 있는 컴퓨터게임이 과연 어떠한 역사를 갖고 성장해 왔는지 추적했다.","source":"두 번째 이미지 · 왼쪽 상단","note":"두 번째 이미지가 문장 끝 「이다.」에서 시작합니다. 첫 번째 이미지와 사이에 누락된 원문이 있습니다."},{"id":"p11","section":"스토리텔링의 미래 전망","text":"10장에서는 스토리텔링의 미래를 다루었다. 이 책을 집필한 궁극적인 목표이자 종착점이 바로 여기에 있다. 앞으로 스토리텔링은 어떠한 방향으로 나아갈 것인가. 오늘날은 상호작용 시대를 넘어서서 4차 산업혁명의 시대다. 인간의 인지 혁명을 뛰어넘는 지능 로봇의 시대가 열리고 있다. 소설을 쓰는 로봇이 등장했고 인간과 말을 주고받는 채팅 로봇은 제법 수준급이다. 또한 빅데이터(big data)의 시대이기도 하다. 이러한 시대에 우리의 이야기는 어떤 매체와 결합하고 어떤 방식으로 사연을 전개할 것인가에 대해 기술했다. 작가에 의해 처음과 끝이 이미 정해져 있는 선형적 스토리텔링 시대의 종말이 오고 있다. 입체적이고 다차원적인 스토리가 요구된다. 그 너머의 세상에서 스토리텔링은 어떤 역사의 한 물결을 넘어서며 새 시대를 열어 갈 수 있을지 종합적으로 추적했다.","source":"두 번째 이미지 · 왼쪽","note":""},{"id":"p12","section":"생존, 유희, 디지털의 미래","text":"과학기술의 발달에 따라 우리가 사용하는 커뮤니케이션 도구인 매체는 새로운 형태로 옷을 갈아입고 우리 앞에 다양한 모습으로 나타나고 있다. 그 매체에 어떻게 접근하고 또 어떻게 그것을 활용하는가에 따라 삶의 질이 달라진다. 과거 역사를 보면 매체의 변이는 수많은 직업을 낳고 또 사라지게 만들었다. 말로, 문자로, 영상으로, 또 프로그래밍으로 스토리텔링을 하며 생계를 영위하는 사람들이 많다. 소설가를 비롯한 저술가, 감독을 비롯한 다양한 직종의 영화인들, 방송 프로듀서와 작가와 CF 감독들, 그리고 연출가를 비롯한 무대 공연가들, 게임 프로그래머와 그래픽 디자이너 등 새 시대의 스토리텔링을 이어 가는 사람들이다. 이러한 직업군들을 우리는 흔히 작가로 통칭한다. 필자는 ‘작가’라고 하는 사람들을 자신의 경험과 공동체의 역사를 연구하며 더 나은 미래를 추구하는 모험가 즉 우리말 발음으로 ‘뻥(fun)을 팔아 빵(pão)을 사는 사람’이라고 부르곤 했다.","source":"두 번째 이미지 · 왼쪽","note":""},{"id":"p13","section":"생존, 유희, 디지털의 미래","text":"역사적으로 이야기와 모든 담화는 인류의 생존을 위해 시작한 것이었다. 이야기꾼은 공동체로부터 생존을 보장받으며 그 직업에 전념할 수 있었다. 작가들은 사물에 대한 관찰력과 기억력이 뛰어나고 창의력과 상상력이 풍부해야 했다. 내일을 예측할 수 있어야 했고 또한 사물과 사건을 종합할 수 있는 능력을 가진 창조적 지식인들이었다. 원시시대에는 이들이 주로 제의를 주관하고 놀이와 유희를 창안했다. 즉, 부족의 생존을 책임지는 지도자이자 제사장이고 주술사였다. 이러한 전통이 현대까지 그대로 살아남아 있는 분야가 정치와 종교다. 또한 물건을 팔기 위해서도 인간들은 스토리를 연구해야 했다. 나아가 우주의 이치와 사물의 역학을 알기 위해서도 상상과 직관을 펼칠 수 있어야 했다.","source":"두 번째 이미지 · 왼쪽","note":""},{"id":"p14","section":"생존, 유희, 디지털의 미래","text":"인류가 발전시켜 온 수학, 화학, 물리학 등 자연과학의 영역과 마찬가지로 인문 예술의 영역도 많은 변화를 거듭해 왔다. 지금은 0과 1로 만물을 재창조하는 디지털의 시대다. 디지털 스토리텔링은 지난 과거의 창작 방법을 모두 바꾸어 놓을 것이다.","source":"두 번째 이미지 · 왼쪽","note":""},{"id":"p15","section":"생존, 유희, 디지털의 미래","text":"인류의 삶은 과학의 발달로 과거보다 꽤 편리해지고 윤택해졌지만 그 내면이 더 풍요로워졌다고는 말할 수 없다. 스토리텔링의 기법도 과거보다 현재가 더 훌륭하다고 단언할 수 없다. 아리스토텔레스가 쓴 『시학(The Poetics)』이라는 문학 이론서가 2500여 년이 지난 지금까지도 매우 중요한 책으로 인용되는 까닭이다. 다만 매체의 발달과 변화에 따라 표현 기법이 더 복잡다단하게 변증법적으로 진화해 온 것을 부정할 수는 없다. 마찬가지로 셰익스피어가 지금 시대에 태어나 활약한다면 과연 연극이라는 매체에만 골몰하지는 않았을 것이다. 무엇을 할까. 아마도 평생 완성할 수 없는 다방향의 디지털 스토리텔링을 연구하지 않을까.","source":"두 번째 이미지 · 오른쪽","note":""},{"id":"p16","section":"생존, 유희, 디지털의 미래","text":"이 책에는 필자의 삶의 경험과 궤적이 담겨 있다. 문학, 연극, 방송, 영화, 게임, 그리고 삶의 역할놀이 등 겪은 것과 보고 듣고 익힌 것들을 담담하게 썼다. 필자는 대학에서 문학과 연극을 공부하며 스토리텔링 장르의 융합을 꿈꾸었다. 대학 졸업하기 전에 신춘문예에 당선되어 등단했고, 방송작가 공채로 들어가고, 생존을 위해 대기업 홍보실에 근무하기도 했다. 그때마다 내게 주어진 과업은 주로 스토리텔링이었다. 이후 영화사에서 시나리오를 연구하고, 게임스토리 개발을 위해 온라인게임을 연구하기도 했다. 이러한 개인의 지난했던 삶의 여정이 본 연구를 가능하게 했다.","source":"두 번째 이미지 · 오른쪽","note":""},{"id":"p17","section":"생존, 유희, 디지털의 미래","text":"끝으로 이 책은 스토리를 창작하는 작가들과 스토리텔링 분야를 강의하는 교수나 혹은 연구자를 위해 썼다. 21세기는 4차 산업혁명과 인공지능의 시대다. 이러한 시대에 대중 서사의 미래는 어떤 형태로 나타날 것인지 궁금할 것이다. 그 궁금증을 조금이나마 해소하기 위해 이 책을 썼다. 본문에 등장하는 작품은 굳이 참고문헌 목록에 넣지는 않았다.","source":"두 번째 이미지 · 오른쪽","note":""},{"id":"p18","section":"참고문헌","text":"Boyd, Brian(2009). On the Origin of Stories. Georges Borchardt Ink. 남경태 옮김(2013). 『이야기의 기원』. 휴머니스트.","source":"두 번째 이미지 · 오른쪽 하단","note":""},{"id":"p19","section":"참고문헌","text":"Gottschall, Jonathan(2012). The Storytelling Animal. Brockman Inc. 노승영 옮김(2014). 『스토리텔링 애니멀』. 민음사.","source":"두 번째 이미지 · 오른쪽 하단","note":""}];
+const chapters=[...new Set(passages.map(p=>p.section))];
+const KEY='storytelling-typing-v2';
+const readSaved=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}};
+const initial=readSaved();
+const state={index:Math.min(Math.max(Number(initial.index)||0,0),passages.length-1),texts:(initial.texts&&typeof initial.texts==='object'?initial.texts:{}),hidden:false,font:Math.min(Math.max(Number(initial.font)||19,15),27),activeStart:Date.now(),lastEdit:0};
+const el=id=>document.getElementById(id);
+const escapeHTML=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
+const chars=s=>Array.from((s||'').normalize('NFC'));
+const actual=i=>state.texts[passages[i].id]||'';
+const matches=i=>actual(i)!=='' && actual(i).normalize('NFC')===passages[i].text.normalize('NFC');
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({index:state.index,texts:state.texts,font:state.font}))}catch(e){el('save-status').textContent='저장 공간 부족'}};
+const toast=msg=>{const n=el('toast');n.textContent=msg;n.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>n.classList.remove('show'),2400)};
+function renderNav(query=''){
+  const q=query.trim().toLocaleLowerCase();let content='',visible=0;
+  chapters.forEach(section=>{
+    let ps=passages.map((p,i)=>({...p,i})).filter(p=>p.section===section&&(!q||(p.text+' '+p.section).toLocaleLowerCase().includes(q)));
+    if(!ps.length)return;visible+=ps.length;
+    content+='<div class="chapter"><div class="chapter-title">'+escapeHTML(section)+'<small>'+ps.length+'문단</small></div>';
+    ps.forEach(p=>{let done=matches(p.i);content+='<button type="button" class="item '+(p.i===state.index?'active ':'')+(done?'done':'')+'" data-idx="'+p.i+'" '+(p.i===state.index?'aria-current="step"':'')+'><span class="item-index">'+(done?'✓':String(p.i+1).padStart(2,'0'))+'</span><span class="item-label">'+escapeHTML(p.text.slice(0,22))+'…</span><small>'+Math.round(100*chars(actual(p.i)).length/chars(p.text).length)+'%</small></button>'});
+    content+='</div>';
+  });
+  el('nav').innerHTML=content||'<div class="no-results">검색된 문단이 없습니다.</div>';
+  el('sidebar-count').textContent=visible+' PARAS';
+  el('nav').querySelectorAll('[data-idx]').forEach(b=>b.onclick=()=>navigate(Number(b.dataset.idx)));
+}
+function renderSource(){
+  const source=el('source-text'),p=passages[state.index];
+  if(state.hidden){source.textContent='원문을 숨겼습니다. 기억을 떠올리며 입력해 보세요.';source.classList.add('hidden');return}
+  source.classList.remove('hidden');
+  const target=chars(p.text),typed=chars(actual(state.index));
+  let html='';
+  target.forEach((ch,i)=>{let cls='char';if(i<typed.length) cls+=typed[i]===ch?' correct':' wrong';else if(i===typed.length)cls+=' cursor';html+='<span class="'+cls+'">'+escapeHTML(ch)+'</span>'});
+  source.innerHTML=html;
+}
+function renderStats(){
+ const p=passages[state.index],target=chars(p.text),typed=chars(actual(state.index));let correct=0;
+ for(let i=0;i<Math.min(typed.length,target.length);i++){if(typed[i]===target[i])correct++}
+ const diff=Math.max(0,typed.length-correct),acc=typed.length?Math.round(100*correct/typed.length):null;
+ el('accuracy').textContent=acc===null?'—':acc;
+ el('typed-count').textContent=typed.length;el('typed-total').textContent='/ '+target.length;
+ el('errors').textContent=diff;
+ el('para-progress').textContent=Math.min(100,Math.round(100*typed.length/target.length));
+ const done=matches(state.index);
+ el('completion').style.display=done?'flex':'none';
+ el('save-status').textContent=done?'✓ 정확하게 완료':'✓ 자동 저장';
+ if(!done && typed.length===0)el('save-status').textContent='입력 대기 중';
+ const n=passages.filter((_,i)=>matches(i)).length,pct=Math.round(100*n/passages.length);
+ el('overall-pct').textContent=pct+'%';el('overall-done').textContent=n;el('overall-total').textContent=passages.length;
+ el('overall-bar').style.width=pct+'%';
+}
+function renderPage(){
+ const p=passages[state.index];
+ el('chapter-title').textContent=p.section;el('crumb-chapter').textContent=p.section;
+ el('paragraph-indicator').textContent='문단 '+String(state.index+1).padStart(2,'0')+' / '+passages.length;
+ el('source-name').textContent=p.source;el('target-count').textContent='원문 '+chars(p.text).length+'자';
+ el('notice').style.display=p.note?'flex':'none';el('notice').textContent=p.note;
+ el('typing').value=actual(state.index);
+ el('toggle-source').textContent=state.hidden?'보이기':'숨기기';el('toggle-source-top').textContent=state.hidden?'원문 보기':'원문 숨기기';
+ el('prev').disabled=state.index===0;el('next').textContent=state.index===passages.length-1?'첫 문단으로 ↺':'다음 문단 →';
+ el('complete-next').textContent=state.index===passages.length-1?'첫 문단으로 ↺':'다음 문단으로 →';
+ document.documentElement.style.setProperty('--font-size',state.font+'px');
+ renderSource();renderStats();renderNav(el('search').value);
+}
+function navigate(i,focus=false){state.index=Math.max(0,Math.min(passages.length-1,i));state.hidden=false;save();renderPage();closeMenu();if(focus){el('typing').focus()} window.scrollTo({top:0,behavior:'smooth'})}
+function next(){navigate(state.index===passages.length-1?0:state.index+1)}
+function toggleSource(force){state.hidden=typeof force==='boolean'?force:!state.hidden;renderPage()}
+function closeMenu(){el('app').classList.remove('menu-open');el('sidebar').classList.remove('open')}
+el('menu-toggle').onclick=()=>{let on=el('sidebar').classList.toggle('open');el('app').classList.toggle('menu-open',on)};
+el('app').addEventListener('click',e=>{if(e.target===el('app'))closeMenu()});
+el('typing').addEventListener('input',e=>{state.texts[passages[state.index].id]=e.target.value;save();if(!e.isComposing){renderSource();renderStats();renderNav(el('search').value)}});
+el('typing').addEventListener('compositionend',()=>{renderSource();renderStats();renderNav(el('search').value)});
+el('typing').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();next()}else if(e.altKey&&e.key==='ArrowLeft'){e.preventDefault();navigate(state.index-1)}else if(e.altKey&&e.key==='ArrowRight'){e.preventDefault();next()}});
+el('prev').onclick=()=>navigate(state.index-1);
+el('next').onclick=next;el('complete-next').onclick=next;
+el('toggle-source').onclick=()=>toggleSource();el('toggle-source-top').onclick=()=>toggleSource();
+el('show-answer').onclick=()=>{toggleSource(false);document.querySelector('.source-body').scrollIntoView({behavior:'smooth',block:'center'})};
+el('search').addEventListener('input',e=>renderNav(e.target.value));
+el('clear-current').onclick=()=>{if(!actual(state.index))return;if(confirm('현재 문단에서 입력한 필사를 지울까요?')){state.texts[passages[state.index].id]='';save();renderPage();el('typing').focus();toast('현재 문단의 필사를 지웠습니다.')}};
+el('font-minus').onclick=()=>{state.font=Math.max(15,state.font-1);save();renderPage()};
+el('font-plus').onclick=()=>{state.font=Math.min(27,state.font+1);save();renderPage()};
+el('copy-original').onclick=async()=>{try{await navigator.clipboard.writeText(passages[state.index].text);toast('원문을 복사했어요.')}catch{const t=document.createElement('textarea');t.value=passages[state.index].text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('원문을 복사했어요.')}};
+function exportText(){let lines=['스토리텔링의 역사 · 타이핑 필사 기록','내보낸 시각: '+new Date().toLocaleString('ko-KR'),'','총 '+passages.length+'문단',''];passages.forEach((p,i)=>{lines.push('['+String(i+1).padStart(2,'0')+'] '+p.section, '출처: '+p.source,'','[원문]',p.text,'','[내 필사]',actual(i)||'(미입력)','','학습상태: '+(matches(i)?'완료':'연습 중'),'','----------------------------------------','')});const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='스토리텔링의_역사_필사기록.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);toast('필사 기록을 텍스트 파일로 저장했어요.')}
+el('export-data').onclick=exportText;
+el('reset-all').onclick=()=>{if(confirm('전체 문단의 필사 기록을 모두 지울까요? 이 작업은 되돌릴 수 없습니다.')){state.texts={};state.index=0;state.hidden=false;save();renderPage();toast('전체 필사 기록을 초기화했습니다.')}};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+renderPage();
+</script>
+</body>
+</html>
