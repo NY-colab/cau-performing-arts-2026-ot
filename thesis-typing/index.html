@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f5f6f2">
-  <meta name="description" content="중앙대학교 예술대학원 논문자격시험 대비, 6개 서술형 모범답안 타이핑 필사 연습장. 문단별·전체 필사, 실시간 정확도, 자동저장, 암기 모드.">
+  <meta name="description" content="중앙대학교 예술대학원 논문자격시험 대비, 6개 서술형 모범답안 타이핑 필사 연습장. 문장별·문단별·전체 필사, 실시간 정확도, 자동저장, 암기 모드.">
   <title>예술 논문자격시험 | 타이핑 필사 스튜디오</title>
   <style>
     :root {color-scheme: light; --bg:#f4f5f0; --paper:#fffefb; --ink:#21332f; --muted:#77817c; --line:#dce2da; --line-2:#ebeeea; --pine:#27564a; --pine-dark:#194538; --pine-soft:#e9f2ec; --amber:#af6a37; --amber-soft:#fff4e6; --error:#9b463f; --error-soft:#ffeae7; --shadow:0 10px 40px rgba(30,57,46,.055); --radius:18px; --ui:'Pretendard','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif; }
@@ -135,6 +135,44 @@
     @media (max-width:850px) { .topbar-inner{padding:0 17px}.layout{display:block;padding:25px 16px 50px}.sidebar{position:static}.sidebar-top{padding:0 4px 10px}.sidebar h1{font-size:25px;margin:5px 0}.sidebar p{display:none}.side-progress{padding:12px 4px}.side-caption{padding:13px 4px 8px}.essay-nav{display:flex;overflow-x:auto;padding:3px 0 8px;scrollbar-width:thin;scroll-snap-type:x proximity}.nav-item{min-width:164px;scroll-snap-align:start;background:#eef1eb;border-color:#e2e7df}.nav-dot{display:none}.side-tip{display:none}.hero{padding:23px 0 20px}.hero h2{font-size:28px}.workspace{grid-template-columns:1fr}.panel{min-height:auto}.ref-body{max-height:330px;min-height:180px}.typing-body{min-height:360px}.overview{grid-template-columns:repeat(4,1fr)} }
     @media (max-width:520px) { .top-right{display:none}.hero-head{display:block}.pill{display:inline-flex;margin-top:12px}.hero h2{font-size:24px}.hero-lede{font-size:12px}.overview{grid-template-columns:repeat(2,1fr)}.metric{padding:12px 14px}.metric-value{font-size:23px}.workspace-header{align-items:stretch}.toolbar{width:100%}.segmented{flex:1}.segmented button{flex:1}.utility{flex:none}.panel-header{padding:15px 16px}.ref-body{padding:16px;max-height:270px;line-height:2}.ref-footer,.typing-footer{padding:12px 15px}.typing-body{padding:13px;min-height:330px}textarea{min-height:275px;padding:15px;line-height:2}.nav-actions{width:100%;display:grid;grid-template-columns:1fr 1fr}.btn{padding:10px 12px}.navigation .step-count{margin-left:auto}.keyword-panel{padding:15px}.keyword-panel .keyword-desc{font-size:10px} }
     @media print { :root{color-scheme:light} body{background:#fff}.topbar,.sidebar,.overview,.workspace-header,.workspace,.navigation,.keyword-panel,.footer-notes{display:none!important}.layout{display:block;padding:0}.hero{display:none}.print-only{display:block!important}.print-essay{page-break-after:always;font-size:11pt;line-height:1.8}.print-essay h2{font-size:15pt;margin:0 0 1em}.print-essay p{margin:0 0 .9em}.print-essay:last-child{page-break-after:auto} }
+    /* 큰 문장 필사 모드: 원문을 한 문장씩 크게 표시하며 입력칸도 확대 */
+    .sentence-tools {display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:#fffefa;border:1px solid #dbe5d9;border-radius:14px;padding:15px 18px;margin:0 0 13px;box-shadow:0 3px 12px rgba(28,62,40,.03)}
+    .sentence-tools[hidden]{display:none!important}
+    .sentence-counter {display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;font-weight:850;color:var(--pine)}
+    .sentence-meter {width:118px;height:7px;border-radius:100px;overflow:hidden;background:#e3ece2}
+    .sentence-meter>span {height:100%;display:block;width:0;background:#378762;transition:width .2s}
+    .sentence-options {display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+    .sentence-size {border:1px solid #d6e1d8;background:#f9fbf6;border-radius:8px;color:#325a47;font-size:13px;font-weight:900;padding:7px 12px;min-width:40px;min-height:36px}
+    .sentence-size:hover:not(:disabled){background:#eaf3ea}
+    .sentence-size:disabled{opacity:.4;cursor:default}
+    .sentence-font-count {font-size:11px;min-width:35px;text-align:center;color:#748579}
+    .auto-next {margin-left:10px;font-size:12px;font-weight:750;color:#486c56;display:inline-flex;gap:7px;align-items:center;cursor:pointer;white-space:nowrap}
+    .auto-next input {accent-color:var(--pine);width:16px;height:16px;cursor:pointer}
+    .workspace.sentence-layout {grid-template-columns:minmax(0,1fr)}
+    .workspace.sentence-layout .panel {min-height:0}
+    .workspace.sentence-layout .ref-panel {border-color:#bdd5c6;background:#fff}
+    .workspace.sentence-layout .ref-body {font-size:var(--sentence-font-size,32px);line-height:1.82;letter-spacing:-.038em;font-weight:700;padding:33px 37px 39px;min-height:145px;max-height:none;overflow-wrap:anywhere}
+    .workspace.sentence-layout .typing-body {min-height:0}
+    .workspace.sentence-layout textarea {flex:none;min-height:146px;font-size:21px;line-height:1.85;padding:22px}
+    .workspace.sentence-layout .ref-footer {padding:11px 20px}
+    @media (max-width:850px) {
+      .workspace.sentence-layout .ref-panel {position:sticky;top:5px;z-index:10;box-shadow:0 8px 28px rgba(32,64,45,.12)}
+      .workspace.sentence-layout .ref-body {max-height:36dvh;min-height:115px;overflow-y:auto;padding:21px 24px;line-height:1.68}
+      .workspace.sentence-layout .typing-body {min-height:0;padding:13px}
+      .workspace.sentence-layout textarea {min-height:160px;font-size:19px;padding:16px}
+      .sentence-tools {padding:12px 13px}
+    }
+    @media (max-width:520px) {
+      .sentence-tools {gap:8px}
+      .sentence-counter {width:100%;justify-content:space-between}
+      .sentence-meter {flex:1}
+      .sentence-options {justify-content:space-between;width:100%}
+      .auto-next {margin-left:auto;font-size:11px}
+      .workspace.sentence-layout .ref-body {padding:20px 19px;max-height:34dvh}
+      .workspace.sentence-layout .panel-header {padding:11px 16px}
+      .workspace.sentence-layout .ref-footer {padding:8px 12px;font-size:10px}
+      .workspace.sentence-layout .typing-panel .editor-label {font-size:11px}
+    }
     .print-only{display:none}
     @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
   </style>
@@ -152,14 +190,18 @@
     </div>
     <div class="side-caption" id="trackCaption">예술 공통 · 5문제</div>
     <nav class="essay-nav" id="essayNav" aria-label="기출문제 선택"></nav>
-    <div class="side-tip"><h3>⌨️ 필사 TIP</h3><p>짧은 문단부터 정확히 베껴 쓴 뒤, 원문 가리기를 켜고 다시 써 보세요.<br><br><kbd>Ctrl</kbd> 또는 <kbd>⌘</kbd> + <kbd>Enter</kbd> 다음 문단</p></div>
+    <div class="side-tip"><h3>⌨️ 필사 TIP</h3><p>‘한 문장씩’에서 큰 글씨로 필사하고, 이어서 문단별·전체 답안 연습으로 넘어가세요.<br><br><kbd>Ctrl</kbd> 또는 <kbd>⌘</kbd> + <kbd>Enter</kbd> 다음 구간</p></div>
   </aside>
   <main class="main" id="work-area">
     <section class="hero" aria-label="선택한 기출문제"><div class="hero-head"><div><div class="eyebrow" id="questionEyebrow">QUESTION 01 · 미래 전망</div><h2 id="questionTitle">AI 시대의 예술 변화 전망을 서술하시오.</h2><p id="questionShort" class="hero-lede">기술을 넘어, 창작자의 역할이 바뀌는 시대</p><a id="essaySource" class="source-link" target="_blank" rel="noopener noreferrer" hidden href="#">공유 대화의 모범답안 원문 ↗</a></div><span class="pill">서술형 · A4 1장</span></div></section>
     <section class="overview" aria-label="필사 통계"><div class="metric"><div class="metric-label">현재 필사 진도</div><div class="metric-value" id="currentPercent">0<small>%</small></div></div><div class="metric"><div class="metric-label">일치 정확도</div><div class="metric-value" id="accuracy">100<small>%</small></div></div><div class="metric"><div class="metric-label">집중한 시간</div><div class="metric-value" id="timeSpent">00:00</div></div><div class="metric"><div class="metric-label">분당 타수</div><div class="metric-value" id="cpm">0<small>타</small></div></div></section>
-    <div class="workspace-header"><div class="section-label">필사 연습 <small id="scopeLabel">1번 문단 · 6개 중</small></div><div class="toolbar"><div class="segmented" role="group" aria-label="필사 범위"><button type="button" id="paragraphMode" aria-pressed="true">문단별 연습</button><button type="button" id="wholeMode" aria-pressed="false">전체 답안</button></div><button type="button" class="utility" id="toggleMask" aria-pressed="false" title="원문을 가리고 암기 연습하기">◉ <span id="maskLabel">원문 가리기</span></button></div></div>
+    <div class="workspace-header"><div class="section-label">필사 연습 <small id="scopeLabel">1번 문단 · 6개 중</small></div><div class="toolbar"><div class="segmented" role="group" aria-label="필사 범위"><button type="button" id="sentenceMode" aria-pressed="false">한 문장씩</button><button type="button" id="paragraphMode" aria-pressed="true">문단별 연습</button><button type="button" id="wholeMode" aria-pressed="false">전체 답안</button></div><button type="button" class="utility" id="toggleMask" aria-pressed="false" title="원문을 가리고 암기 연습하기">◉ <span id="maskLabel">원문 가리기</span></button></div></div>
     <nav id="paragraphNav" class="paragraphs" aria-label="문단별 이동"></nav>
-    <section class="workspace" aria-label="원문과 필사 입력 영역">
+    <section class="sentence-tools" id="sentenceTools" aria-label="한 문장씩 연습 설정" hidden>
+      <div class="sentence-counter"><span id="sentencePosition" aria-live="polite">1 / 1번째 문장</span><div class="sentence-meter" aria-hidden="true"><span id="sentenceProgressBar"></span></div></div>
+      <div class="sentence-options"><button type="button" class="sentence-size" id="sentenceSmaller" aria-label="원문 글씨 작게">A−</button><span id="sentenceFontLabel" class="sentence-font-count">32px</span><button type="button" class="sentence-size" id="sentenceLarger" aria-label="원문 글씨 크게">A+</button><label class="auto-next"><input type="checkbox" id="autoAdvance" checked>완료하면 자동 넘기기</label></div>
+    </section>
+    <section class="workspace" id="workspace" aria-label="원문과 필사 입력 영역">
       <article class="panel ref-panel" aria-labelledby="refHeading"><header class="panel-header"><div class="panel-title" id="refHeading">📖 모범답안 <span class="panel-subtitle">원문</span></div><span class="panel-subtitle" id="refCount">0자</span></header><div id="reference" class="ref-body" aria-label="필사할 원문"></div><footer class="ref-footer"><span class="legend"><i></i> 정확히 입력</span><span class="legend error"><i></i> 다른 글자</span><span class="legend cursor-legend"><i></i> 현재 위치</span></footer></article>
       <article class="panel typing-panel" aria-labelledby="typingHeading"><header class="panel-header"><div class="panel-title" id="typingHeading">✎ 나의 필사 <span class="panel-subtitle">직접 타이핑</span></div><span class="panel-subtitle" id="typedCount">0 / 0자</span></header><div class="typing-body"><div class="editor-label"><span>위의 모범답안을 아래에 정확히 입력해 보세요.</span><b id="matchStatus">입력 대기</b></div><textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="여기를 클릭하고 모범답안을 필사해 보세요.\n\n띄어쓰기와 문장부호를 연습해 보세요." aria-label="모범답안 필사 입력칸"></textarea><div class="editor-hint">한 글자씩 채점합니다. ‘ ’ / “ ”는 일반 따옴표로, 『 』 / 「 」는 [ ]로, ·는 쉼표(,)로 입력해도 인정합니다.</div></div><footer class="typing-footer"><div class="save-status" id="saveStatus" aria-live="polite"><i></i><span>이 브라우저에 자동 저장</span></div><button type="button" class="danger-link" id="clearCurrent">이 구간 다시 쓰기</button></footer></article>
     </section>
@@ -178,14 +220,18 @@
   const key = 'arts-qualifying-typing-v1';
   const $ = id => document.getElementById(id);
   const trackNames = {common:'예술 공통',major:'미디어스토리텔링전공'};
-  const el = {nav:$('essayNav'), overallPercent:$('overallPercent'),overallBar:$('overallBar'),overallBarAria:$('overallBarAria'),overallDetail:$('overallDetail'),eyebrow:$('questionEyebrow'),title:$('questionTitle'),short:$('questionShort'),currentPercent:$('currentPercent'),accuracy:$('accuracy'),timeSpent:$('timeSpent'),cpm:$('cpm'),scope:$('scopeLabel'),paragraphMode:$('paragraphMode'),wholeMode:$('wholeMode'),mask:$('toggleMask'),maskLabel:$('maskLabel'),paragraphNav:$('paragraphNav'),reference:$('reference'),refCount:$('refCount'),typedCount:$('typedCount'),status:$('matchStatus'),editor:$('editor'),save:$('saveStatus'),clear:$('clearCurrent'),prev:$('prev'),next:$('next'),step:$('stepCount'),keywords:$('keywords'),toast:$('toast'),download:$('downloadProgress'),import:$('importProgress'),file:$('fileInput'),print:$('printAll')};
+  const el = {nav:$('essayNav'), overallPercent:$('overallPercent'),overallBar:$('overallBar'),overallBarAria:$('overallBarAria'),overallDetail:$('overallDetail'),eyebrow:$('questionEyebrow'),title:$('questionTitle'),short:$('questionShort'),currentPercent:$('currentPercent'),accuracy:$('accuracy'),timeSpent:$('timeSpent'),cpm:$('cpm'),scope:$('scopeLabel'),sentenceMode:$('sentenceMode'),sentenceTools:$('sentenceTools'),sentencePosition:$('sentencePosition'),sentenceProgressBar:$('sentenceProgressBar'),sentenceSmaller:$('sentenceSmaller'),sentenceLarger:$('sentenceLarger'),sentenceFontLabel:$('sentenceFontLabel'),autoAdvance:$('autoAdvance'),workspace:$('workspace'),paragraphMode:$('paragraphMode'),wholeMode:$('wholeMode'),mask:$('toggleMask'),maskLabel:$('maskLabel'),paragraphNav:$('paragraphNav'),reference:$('reference'),refCount:$('refCount'),typedCount:$('typedCount'),status:$('matchStatus'),editor:$('editor'),save:$('saveStatus'),clear:$('clearCurrent'),prev:$('prev'),next:$('next'),step:$('stepCount'),keywords:$('keywords'),toast:$('toast'),download:$('downloadProgress'),import:$('importProgress'),file:$('fileInput'),print:$('printAll')};
   let stored = {};
   try {stored = JSON.parse(localStorage.getItem(key) || '{}') || {};} catch(e) { stored = {}; }
   if (!stored.entries || typeof stored.entries !== 'object') stored.entries = {};
   let essayIndex = essays.findIndex(e => e.id === stored.lastEssay);
   if (essayIndex < 0) essayIndex = 0;
   let paraIndex = Number.isInteger(stored.lastParagraph) ? Math.max(0, stored.lastParagraph) : 0;
-  let mode = stored.lastMode === 'whole' ? 'whole' : 'paragraph';
+  let sentenceIndex = Number.isInteger(stored.lastSentence) ? Math.max(0, stored.lastSentence) : 0;
+  let mode = new URLSearchParams(location.search).get('mode') === 'sentence' ? 'sentence' : stored.lastMode === 'whole' ? 'whole' : stored.lastMode === 'sentence' ? 'sentence' : 'paragraph';
+  let autoAdvance = stored.autoAdvance !== false;
+  let autoNextTimer = null;
+  let sentenceFontSize = Number.isFinite(stored.sentenceFontSize) ? Math.min(44,Math.max(24,stored.sentenceFontSize)) : 32;
   let track = essays[essayIndex].track || 'common';
   let masked = false;
   let lastTick = null;
@@ -198,18 +244,25 @@
   const trackCount = t => essays.filter(e=>e.track===t).length;
   const courseButtons = [...document.querySelectorAll('.course-switch button')];
   const sourceLink = $('essaySource');
-  const positionKey = (e=essay(),m=mode,p=paraIndex) => `${e.id}:${m === 'whole' ? 'whole' : `p${p}`}`;
-  const targetFor = (e=essay(),m=mode,p=paraIndex) => m === 'whole' ? e.paragraphs.join('\n\n') : e.paragraphs[p];
+  const sentenceSegmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('ko',{granularity:'sentence'}) : null;
+  const splitSentences = text => sentenceSegmenter ? [...sentenceSegmenter.segment(text)].map(part=>part.segment.trim()).filter(Boolean) : (text.match(/[^.!?]+(?:[.!?]+[”’"'」』\]]*(?=\s|$)|$)/g) || [text]).map(s=>s.trim()).filter(Boolean);
+  const sentenceCache = Object.fromEntries(essays.map(e=>[e.id,e.paragraphs.map(splitSentences)]));
+  const sentenceParts = (e=essay(),p=paraIndex) => sentenceCache[e.id][p] || [];
+  const sentenceTotal = e => sentenceCache[e.id].reduce((n,p)=>n+p.length,0);
+  const sentencePosition = (e=essay(),p=paraIndex,s=sentenceIndex) => sentenceCache[e.id].slice(0,p).reduce((n,part)=>n+part.length,0)+s+1;
+  const positionKey = (e=essay(),m=mode,p=paraIndex,s=sentenceIndex) => `${e.id}:${m==='whole'?'whole':m==='sentence'?`p${p}:s${s}`:`p${p}`}`;
+  const targetFor = (e=essay(),m=mode,p=paraIndex,s=sentenceIndex) => m==='whole' ? e.paragraphs.join('\n\n') : m==='sentence' ? (sentenceParts(e,p)[s] || '') : e.paragraphs[p];
+  const firstPendingSentence = (e,p) => sentenceParts(e,p).findIndex((_,i)=>!completed(e,'sentence',p,i)) < 0 ? 0 : sentenceParts(e,p).findIndex((_,i)=>!completed(e,'sentence',p,i));
   const currentEntry = () => {
     const pos = positionKey();
     if (!stored.entries[pos] || typeof stored.entries[pos] !== 'object') stored.entries[pos] = {text:'',seconds:0,completed:false};
     return stored.entries[pos];
   };
-  const readEntry = (e,m,p) => stored.entries[positionKey(e,m,p)] || {text:'',seconds:0,completed:false};
+  const readEntry = (e,m,p,s=0) => stored.entries[positionKey(e,m,p,s)] || {text:'',seconds:0,completed:false};
   const clampPercent = value => Math.max(0,Math.min(100,Math.round(value)));
   const fmtTime = n => { const sec=Math.max(0,Math.floor(n)); return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`; };
   const save = () => {
-    stored.lastEssay=essay().id;stored.lastParagraph=paraIndex;stored.lastMode=mode;
+    stored.lastEssay=essay().id;stored.lastParagraph=paraIndex;stored.lastSentence=sentenceIndex;stored.lastMode=mode;stored.autoAdvance=autoAdvance;stored.sentenceFontSize=sentenceFontSize;
     try {localStorage.setItem(key,JSON.stringify(stored)); el.save.querySelector('span').textContent='이 브라우저에 자동 저장';}
     catch(e){el.save.querySelector('span').textContent='자동저장 불가 · 백업 권장'; if(!storageWarned){toast('브라우저 저장이 차단됐어요. 백업 파일로 보관해 주세요.'); storageWarned=true;}}
   };
@@ -222,18 +275,23 @@
     for (let i=0;i<input.length;i++) {if(i < target.length && sameChar(input[i],target[i])) matches++; else mistakes++;}
     return {matches,mistakes,accuracy: input.length ? (matches/input.length)*100 : 100, progress:clampPercent(matches/target.length*100),complete:sameText(input,target)};
   }
-  function completed(e=essay(),m='paragraph',p=0) {
-    const data=readEntry(e,m,p);return sameText(data.text||'',targetFor(e,m,p));
+  function completed(e=essay(),m='paragraph',p=0,s=0) {
+    const data=readEntry(e,m,p,s);return sameText(data.text||'',targetFor(e,m,p,s));
   }
-  function essayCompletion(e) {return completed(e,'whole') || e.paragraphs.every((_,i)=>completed(e,'paragraph',i));}
+  const paragraphDone = (e,p) => completed(e,'whole') || completed(e,'paragraph',p) || sentenceParts(e,p).every((_,i)=>completed(e,'sentence',p,i));
+  function essayCompletion(e) {return completed(e,'whole') || e.paragraphs.every((_,i)=>paragraphDone(e,i));}
   function completedParagraphs(e) {
-    if (completed(e,'whole')) return e.paragraphs.length;
-    return e.paragraphs.reduce((n,_,i)=>n+(completed(e,'paragraph',i)?1:0),0);
+    return e.paragraphs.reduce((n,_,i)=>n+(paragraphDone(e,i)?1:0),0);
   }
   function progressAcrossAll() {
     const total=essays.reduce((n,e)=>n+e.paragraphs.length,0);
     const done=essays.reduce((n,e)=>n+completedParagraphs(e),0);
-    return {done,total,percent:clampPercent(done/total*100)};
+    const weighted=essays.reduce((total,e)=>total+e.paragraphs.reduce((partSum,_,p)=> {
+      if(paragraphDone(e,p)) return partSum+1;
+      const sentences=sentenceParts(e,p);
+      return partSum+sentences.filter((_,s)=>completed(e,'sentence',p,s)).length/Math.max(1,sentences.length);
+    },0),0);
+    return {done,total,percent:clampPercent(weighted/total*100)};
   }
   function renderNavigation() {
     el.nav.replaceChildren();
@@ -249,15 +307,23 @@
       const count=document.createElement('span');count.className='nav-count';count.textContent=`${completedParagraphs(e)} / ${e.paragraphs.length} 문단 완료`;
       const dot=document.createElement('span');dot.className=`nav-dot${essayCompletion(e)?' done':''}`;
       texts.append(title,count);btn.append(num,texts,dot);
-      btn.addEventListener('click',()=>{pause();essayIndex=i;paraIndex=0;renderAll();window.scrollTo({top:0,behavior:'smooth'});});el.nav.append(btn);
+      btn.addEventListener('click',()=>{clearTimeout(autoNextTimer);pause();essayIndex=i;paraIndex=0;sentenceIndex=mode==='sentence'?firstPendingSentence(e,0):0;renderAll();window.scrollTo({top:0,behavior:'smooth'});});el.nav.append(btn);
     });
   }
   function renderParagraphChips() {
     el.paragraphNav.replaceChildren();
-    if (mode==='whole') {el.paragraphNav.hidden=true;return;}
+    if(mode==='whole'){el.paragraphNav.hidden=true;return;}
     el.paragraphNav.hidden=false;
     essay().paragraphs.forEach((p,i)=>{
-      const btn=document.createElement('button');btn.type='button';btn.className=`paragraph-chip${completed(essay(),'paragraph',i)?' done':''}`;btn.setAttribute('aria-current',String(i===paraIndex));btn.setAttribute('aria-label',`${i+1}번 문단${completed(essay(),'paragraph',i)?', 완료':''}`);btn.textContent=completed(essay(),'paragraph',i)?'✓':String(i+1).padStart(2,'0');btn.title=`${i+1}번 문단으로 이동`;btn.addEventListener('click',()=>{pause();paraIndex=i;renderAll();});el.paragraphNav.append(btn);
+      const done=paragraphDone(essay(),i);
+      const btn=document.createElement('button');
+      btn.type='button';btn.className=`paragraph-chip${done?' done':''}`;
+      btn.setAttribute('aria-current',String(i===paraIndex));
+      btn.setAttribute('aria-label',`${i+1}번 문단${done?', 완료':''}`);
+      btn.textContent=done?'✓':String(i+1).padStart(2,'0');
+      btn.title=`${i+1}번 문단으로 이동`;
+      btn.addEventListener('click',()=>{clearTimeout(autoNextTimer);pause();paraIndex=i;if(mode==='sentence')sentenceIndex=firstPendingSentence(essay(),i);renderAll();});
+      el.paragraphNav.append(btn);
     });
   }
   function renderReference(input,target) {
@@ -297,11 +363,18 @@
     el.refCount.textContent=`총 ${target.length.toLocaleString('ko-KR')}자`;
     el.status.textContent=result.complete ? '✓ 필사 완료' : input.length===0 ? '입력 대기' : result.mistakes===0 ? '✓ 현재까지 정확' : `다른 글자 ${result.mistakes}개`;
     el.status.style.color=result.complete?'#246e4d':result.mistakes?'#ad4c43':'#27564a';
-    el.next.textContent=mode==='whole'?'다음 주제 →':paraIndex===essay().paragraphs.length-1?'다음 주제 →':'다음 문단 →';
-    el.prev.textContent=mode==='whole'?'← 이전 주제':'← 이전 문단';
     const pos=trackPosition(),length=trackIndices().length;
-    el.prev.disabled=mode==='whole'?pos===0:pos===0 && paraIndex===0;
-    el.next.disabled=mode==='whole'?pos===length-1:pos===length-1&&paraIndex===essay().paragraphs.length-1;
+    if(mode==='sentence'){
+      const isStart=pos===0&&paraIndex===0&&sentenceIndex===0;
+      const isEnd=pos===length-1&&paraIndex===essay().paragraphs.length-1&&sentenceIndex===sentenceParts().length-1;
+      el.next.textContent=isEnd?'마지막 문장 ✓':'다음 문장 →';el.prev.textContent='← 이전 문장';
+      el.prev.disabled=isStart;el.next.disabled=isEnd;
+    }else{
+      el.next.textContent=mode==='whole'?'다음 주제 →':paraIndex===essay().paragraphs.length-1?'다음 주제 →':'다음 문단 →';
+      el.prev.textContent=mode==='whole'?'← 이전 주제':'← 이전 문단';
+      el.prev.disabled=mode==='whole'?pos===0:pos===0 && paraIndex===0;
+      el.next.disabled=mode==='whole'?pos===length-1:pos===length-1&&paraIndex===essay().paragraphs.length-1;
+    }
     renderReference(input,target);
   }
   function refreshProgress() {
@@ -309,29 +382,57 @@
     renderNavigation();renderParagraphChips();
   }
   function renderAll() {
-    if (paraIndex>=essay().paragraphs.length) paraIndex=essay().paragraphs.length-1;
+    paraIndex=Math.max(0,Math.min(paraIndex,essay().paragraphs.length-1));
+    sentenceIndex=Math.max(0,Math.min(sentenceIndex,sentenceParts().length-1));
     track=essay().track || 'common';
     el.eyebrow.textContent=`${trackNames[track]} · QUESTION ${essay().no} · ${essay().category}`;
     sourceLink.hidden=!essay().source;
     if(essay().source) sourceLink.href=essay().source;
     el.title.textContent=essay().question;el.short.textContent=essay().short;
-    el.scope.textContent=mode==='whole'?`전체 ${essay().paragraphs.length}개 문단`:`${paraIndex+1}번 문단 · 총 ${essay().paragraphs.length}개`;
-    el.paragraphMode.setAttribute('aria-pressed',String(mode==='paragraph'));el.wholeMode.setAttribute('aria-pressed',String(mode==='whole'));
-    el.step.textContent=mode==='whole'?`전체 답안 · ${trackPosition()+1} / ${trackIndices().length}`:`${String(paraIndex+1).padStart(2,'0')} / ${String(essay().paragraphs.length).padStart(2,'0')}`;
+    el.sentenceMode.setAttribute('aria-pressed',String(mode==='sentence'));
+    el.paragraphMode.setAttribute('aria-pressed',String(mode==='paragraph'));
+    el.wholeMode.setAttribute('aria-pressed',String(mode==='whole'));
+    el.workspace.classList.toggle('sentence-layout',mode==='sentence');
+    el.sentenceTools.hidden=mode!=='sentence';
+    el.autoAdvance.checked=autoAdvance;
+    el.sentenceFontLabel.textContent=`${sentenceFontSize}px`;
+    el.sentenceSmaller.disabled=sentenceFontSize<=24;
+    el.sentenceLarger.disabled=sentenceFontSize>=44;
+    document.documentElement.style.setProperty('--sentence-font-size',`${sentenceFontSize}px`);
+    if(mode==='sentence'){
+      const s=sentenceParts(),num=sentencePosition(),total=sentenceTotal(essay());
+      el.scope.textContent=`${paraIndex+1}번 문단 · ${sentenceIndex+1} / ${s.length}문장`;
+      el.step.textContent=`문장 ${num} / ${total}`;
+      el.sentencePosition.textContent=`이 답안의 ${num} / ${total}번째 문장`;
+      el.sentenceProgressBar.style.width=`${num/total*100}%`;
+    }else{
+      el.scope.textContent=mode==='whole'?`전체 ${essay().paragraphs.length}개 문단`:`${paraIndex+1}번 문단 · 총 ${essay().paragraphs.length}개`;
+      el.step.textContent=mode==='whole'?`전체 답안 · ${trackPosition()+1} / ${trackIndices().length}`:`${String(paraIndex+1).padStart(2,'0')} / ${String(essay().paragraphs.length).padStart(2,'0')}`;
+    }
     el.editor.value=currentEntry().text||'';
-    el.editor.placeholder=mode==='whole'?'모범답안 전체를 입력해 보세요.\n문단과 문단 사이에는 Enter 키를 두 번 입력해 주세요.':'여기를 클릭하고 위의 문단을 필사해 보세요.\n띄어쓰기도 함께 연습해 보세요.';
+    el.editor.placeholder=mode==='whole'?'모범답안 전체를 입력해 보세요.\n문단과 문단 사이에는 Enter 키를 두 번 입력해 주세요.':mode==='sentence'?'위에 크게 보이는 한 문장을 그대로 타이핑하세요.\n정확히 완성하면 다음 문장으로 이동합니다.':'여기를 클릭하고 위의 문단을 필사해 보세요.\n띄어쓰기도 함께 연습해 보세요.';
     el.reference.scrollTop=0;el.editor.scrollTop=0;
     el.keywords.replaceChildren(...essay().keywords.map(k=>{let chip=document.createElement('span');chip.textContent=k;return chip;}));
     refreshProgress();updateStats();save();
   }
   function onChange() {
-    if(composing) return;
-    const entry=currentEntry(),wasCompleted=completed(essay(),mode,paraIndex);
+    if(composing)return;
+    clearTimeout(autoNextTimer);autoNextTimer=null;
+    const entry=currentEntry(),wasCompleted=completed(essay(),mode,paraIndex,sentenceIndex);
     entry.text=el.editor.value;
     const isDone=sameText(entry.text,targetFor());
     entry.completed=isDone;
     save();updateStats();refreshProgress();
-    if(!wasCompleted && isDone) toast(mode==='whole'?'전체 답안을 정확히 필사했어요! 🎉':'문단 필사 완료! 다음 문단으로 넘어가 보세요.');
+    if(!wasCompleted && isDone){
+      toast(mode==='whole'?'전체 답안을 정확히 필사했어요! 🎉':mode==='sentence'?'한 문장 완성! ✓':'문단 필사 완료! 다음 문단으로 넘어가 보세요.');
+    }
+    if(mode==='sentence' && isDone && autoAdvance && !el.next.disabled){
+      const expectedKey=positionKey();
+      autoNextTimer=setTimeout(()=>{
+        autoNextTimer=null;
+        if(mode==='sentence' && positionKey()===expectedKey && !composing && sameText(el.editor.value,targetFor()))jump(1);
+      },900);
+    }
   }
   function pause() {
     if (lastTick !== null) {
@@ -341,15 +442,43 @@
   }
   function start() {if (lastTick===null && document.visibilityState==='visible') lastTick=Date.now();}
   function tick() {if (lastTick!==null) {const now=Date.now();currentEntry().seconds+=(now-lastTick)/1000;lastTick=now;updateStats();save();}}
-  function changeMode(next) {if (next===mode) return;pause();mode=next;renderAll();}
-  function jump(delta) {
-    pause();
+  function changeMode(next){
+    if(next===mode)return;
+    clearTimeout(autoNextTimer);pause();mode=next;
+    if(mode==='sentence')sentenceIndex=firstPendingSentence(essay(),paraIndex);
+    renderAll();
+  }
+  function jump(delta){
+    clearTimeout(autoNextTimer);autoNextTimer=null;
     const indices=trackIndices(),pos=trackPosition();
-    if(mode==='whole') {const next=pos+delta;if(next<0||next>=indices.length)return;essayIndex=indices[next];paraIndex=0;}
-    else {let next=paraIndex+delta;if(next<0) {if(pos===0)return;essayIndex=indices[pos-1];paraIndex=essays[essayIndex].paragraphs.length-1;}
-      else if(next>=essay().paragraphs.length){if(pos===indices.length-1)return;essayIndex=indices[pos+1];paraIndex=0;}
-      else paraIndex=next;}
-    renderAll();el.editor.focus({preventScroll:true});
+    if(mode==='whole'){
+      if(pos+delta<0||pos+delta>=indices.length)return;
+    }else if(mode==='paragraph'){
+      if((delta<0&&pos===0&&paraIndex===0)||(delta>0&&pos===indices.length-1&&paraIndex===essay().paragraphs.length-1))return;
+    }else{
+      if((delta<0&&pos===0&&paraIndex===0&&sentenceIndex===0)||(delta>0&&pos===indices.length-1&&paraIndex===essay().paragraphs.length-1&&sentenceIndex===sentenceParts().length-1))return;
+    }
+    pause();
+    if(mode==='whole'){
+      essayIndex=indices[pos+delta];paraIndex=0;sentenceIndex=0;
+    }else if(mode==='paragraph'){
+      let next=paraIndex+delta;
+      if(next<0){essayIndex=indices[pos-1];paraIndex=essay().paragraphs.length-1;}
+      else if(next>=essay().paragraphs.length){essayIndex=indices[pos+1];paraIndex=0;}
+      else paraIndex=next;
+    }else{
+      let next=sentenceIndex+delta;
+      if(next<0){
+        if(paraIndex>0)paraIndex--;
+        else{essayIndex=indices[pos-1];paraIndex=essay().paragraphs.length-1;}
+        sentenceIndex=sentenceParts().length-1;
+      }else if(next>=sentenceParts().length){
+        if(paraIndex<essay().paragraphs.length-1)paraIndex++;
+        else{essayIndex=indices[pos+1];paraIndex=0;}
+        sentenceIndex=0;
+      }else sentenceIndex=next;
+    }
+    renderAll();el.editor.focus({preventScroll:true});start();
   }
   el.editor.addEventListener('focus',start);
   el.editor.addEventListener('blur',pause);
@@ -362,9 +491,14 @@
   setInterval(tick,1000);
   courseButtons.forEach(btn=>btn.addEventListener('click',()=>{
     const requested=btn.dataset.track;if(requested===track)return;
-    pause();track=requested;essayIndex=trackIndices()[0];paraIndex=0;renderAll();
+    clearTimeout(autoNextTimer);pause();track=requested;essayIndex=trackIndices()[0];paraIndex=0;sentenceIndex=0;renderAll();
     window.scrollTo({top:0,behavior:'smooth'});
   }));
+  el.sentenceMode.addEventListener('click',()=>changeMode('sentence'));
+  el.autoAdvance.addEventListener('change',()=>{autoAdvance=el.autoAdvance.checked;clearTimeout(autoNextTimer);save();});
+  function changeSentenceSize(diff){sentenceFontSize=Math.max(24,Math.min(44,sentenceFontSize+diff));renderAll();}
+  el.sentenceSmaller.addEventListener('click',()=>changeSentenceSize(-4));
+  el.sentenceLarger.addEventListener('click',()=>changeSentenceSize(4));
   el.paragraphMode.addEventListener('click',()=>changeMode('paragraph'));
   el.wholeMode.addEventListener('click',()=>changeMode('whole'));
   el.mask.addEventListener('click',()=>{masked=!masked;el.mask.setAttribute('aria-pressed',String(masked));el.maskLabel.textContent=masked?'원문 보이기':'원문 가리기';el.reference.classList.toggle('is-masked',masked);});
@@ -388,7 +522,7 @@
       if(obj.format!=='arts-qualifying-typing-v1'||!obj.data||typeof obj.data.entries!=='object'||Array.isArray(obj.data.entries))throw Error('이 학습장의 백업 파일이 아닙니다.');
       if(!confirm('현재 브라우저에 저장된 필사 기록을 백업 파일의 기록으로 교체할까요?'))return;
       pause();stored=obj.data;stored.entries=Object.fromEntries(Object.entries(stored.entries).filter(([k,v])=>typeof v?.text==='string' && v.text.length<50000 && typeof v.seconds==='number'));
-      essayIndex=Math.max(0,essays.findIndex(e=>e.id===stored.lastEssay));paraIndex=Number.isInteger(stored.lastParagraph)?Math.max(0,stored.lastParagraph):0;mode=stored.lastMode==='whole'?'whole':'paragraph';renderAll();toast('백업 파일에서 학습기록을 불러왔어요.');
+      essayIndex=Math.max(0,essays.findIndex(e=>e.id===stored.lastEssay));paraIndex=Number.isInteger(stored.lastParagraph)?Math.max(0,stored.lastParagraph):0;sentenceIndex=Number.isInteger(stored.lastSentence)?Math.max(0,stored.lastSentence):0;mode=stored.lastMode==='whole'?'whole':stored.lastMode==='sentence'?'sentence':'paragraph';autoAdvance=stored.autoAdvance!==false;sentenceFontSize=Number.isFinite(stored.sentenceFontSize)?Math.min(44,Math.max(24,stored.sentenceFontSize)):32;renderAll();toast('백업 파일에서 학습기록을 불러왔어요.');
     } catch(e) {toast(`불러오기 실패: ${e.message}`);} finally {el.file.value='';}
   });
   const printArea=$('printArea');
