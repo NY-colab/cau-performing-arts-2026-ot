@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#f8f7f3" />
+<meta name="description" content="원하는 글을 붙여넣으면 자동으로 문단·문장·줄별로 나눠 필사할 수 있는 무료 개인 타이핑 연습장" />
+<title>나만의 필사 노트 | 텍스트 붙여넣기 필사 웹앱</title>
+<style>
+:root{--bg:#f7f7f4;--paper:#ffffff;--ink:#222d34;--muted:#758087;--line:#e2e6e4;--accent:#187c6d;--accent-soft:#e8f4ef;--accent-deep:#116153;--rose:#b9544b;--rose-bg:#fff0ed;--gold:#bc8c40;--shadow:0 8px 32px rgba(31,52,44,.045);--font-size:19px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,'Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #8ecec2;outline-offset:2px}
+button:disabled{cursor:not-allowed;opacity:.4}
+.app{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;background:#fcfcfa;border-right:1px solid var(--line);padding:27px 19px 26px;display:flex;flex-direction:column;gap:20px;scrollbar-width:thin}
+.brand{display:flex;gap:10px;align-items:center;padding:2px 8px}
+.brand-icon{width:40px;height:40px;display:grid;place-items:center;background:var(--accent);color:white;border-radius:13px;font-family:Georgia,serif;font-size:22px}
+.brand h1{font-size:15px;margin:0 0 3px;letter-spacing:-.4px}.brand p{font-size:11px;color:var(--muted);margin:0;letter-spacing:.5px}
+.aside-card{padding:15px 15px 13px;border:1px solid var(--line);border-radius:16px;background:var(--paper)}
+.aside-heading{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.3px;margin:0 0 10px}
+.bigprogress{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}.bigprogress strong{font-size:23px;font-weight:800;font-variant-numeric:tabular-nums}.bigprogress span{font-size:11px;color:var(--muted)}
+.track{height:7px;background:#ebedeb;border-radius:10px;overflow:hidden}.track>i{display:block;height:100%;width:0;background:var(--accent);transition:width .18s;border-radius:9px}
+.sidebar-search{width:100%;height:39px;border:1px solid var(--line);background:white;border-radius:10px;padding:0 12px;outline:none}
+.sidebar-search::placeholder{color:#9da7a9}
+.side-heading{display:flex;justify-content:space-between;align-items:center;color:#74807b;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:0 10px}
+.chapter{margin-bottom:14px}.chapter-title{font-size:12px;font-weight:800;color:#566561;margin:0 0 5px;padding:7px 11px 3px;line-height:1.5;display:flex;justify-content:space-between;gap:8px}
+.chapter-title small{color:#a0aaa7;font-weight:600;white-space:nowrap}
+.item{border:0;background:transparent;border-radius:10px;padding:9px 10px;width:100%;text-align:left;display:flex;align-items:center;gap:10px;color:#63716e;transition:background .15s;line-height:1.35}
+.item:hover{background:#f0f5f2}.item.active{background:var(--accent-soft);color:var(--accent-deep);font-weight:800}
+.item-index{height:25px;min-width:27px;display:grid;place-items:center;border-radius:7px;background:#eff1ef;color:#87938e;font-size:11px;font-variant-numeric:tabular-nums}
+.item.active .item-index{background:#cde9dc;color:var(--accent-deep)}.item.done .item-index{background:var(--accent);color:#fff}
+.item-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.item small{font-size:10px;color:#a2aaa7}.item.done small{color:var(--accent)}
+.aside-bottom{margin-top:auto;border-top:1px solid var(--line);padding:18px 7px 0;color:var(--muted);font-size:11px;line-height:1.8}
+.aside-bottom button{border:0;background:none;color:var(--accent);padding:0;font-size:11px;text-decoration:underline;text-underline-offset:3px}
+.main{padding:31px 54px 85px;max-width:1320px;width:100%;margin:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:44px}.topbar-left{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}
+.topbar-left .slash{color:#c3cbc7}.topbar-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ghost{border:1px solid var(--line);background:white;color:#4b5857;border-radius:10px;min-height:35px;padding:7px 11px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.ghost:hover{border-color:#c4d9d1;background:#f7fbf8}.ghost:active{transform:translateY(1px)}.ghost.small{min-width:34px;padding:7px}
+.page-head .eyebrow{font-size:12px;color:var(--accent);font-weight:800;letter-spacing:1.1px;margin-bottom:11px}
+.page-head h2{font-family:'Noto Serif KR','Nanum Myeongjo',Georgia,serif;font-size:clamp(27px,3vw,36px);font-weight:700;letter-spacing:-1.7px;line-height:1.4;margin:0;word-break:keep-all}
+.page-head .sub{margin:12px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
+.source-badge{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border:1px solid #e4e9e5;border-radius:999px;color:#7a8880;font-size:11px;background:#fff}
+.lesson-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:20px;margin-bottom:22px}
+.notice{display:flex;align-items:flex-start;gap:9px;background:#fff9ed;border:1px solid #efdfba;border-radius:12px;color:#86672a;font-size:12px;line-height:1.65;padding:11px 14px;margin:0 0 22px}
+.notice::before{content:'!';display:grid;place-items:center;flex:none;width:19px;height:19px;border-radius:50%;background:#ead5a7;font-weight:900;color:#785822}
+.panel{border:1px solid var(--line);border-radius:18px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden}
+.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 23px;border-bottom:1px solid #edf0ed}
+.panel-title{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800}.round-number{display:grid;place-items:center;border-radius:8px;width:26px;height:26px;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:11px}
+.panel-actions{display:flex;align-items:center;gap:6px}
+.textlink{color:#71807a;border:0;background:none;padding:6px 4px;font-size:12px;font-weight:650}.textlink:hover{color:var(--accent)}
+.source-body{padding:28px 29px 33px;line-height:2.15;font-size:var(--font-size);word-break:keep-all;overflow-wrap:break-word;font-family:'Noto Serif KR','Nanum Myeongjo','Batang',Georgia,serif;white-space:pre-wrap;min-height:130px}
+.source-body.hidden{min-height:145px;display:flex;justify-content:center;align-items:center;background:#fafcf9;color:#9baa9e;font:500 13px sans-serif;padding:30px}
+.typing-panel{margin-top:18px}.typing-panel .panelhead{border-bottom:none;padding-bottom:13px}.typing-wrap{padding:0 23px 22px}
+#typing{display:block;width:100%;min-height:205px;border:1.5px solid #dee6e1;outline:0;border-radius:12px;background:#fafcf9;color:#283a34;padding:19px 19px;resize:vertical;font-family:'Noto Serif KR','Nanum Myeongjo','Batang',serif;font-size:var(--font-size);line-height:2.05;letter-spacing:0;word-break:keep-all;transition:border-color .15s,box-shadow .15s}
+#typing::placeholder{color:#aab7b0;font-size:15px}#typing:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(32,139,112,.08)}
+.typing-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:12px}
+.tip{font-size:12px;color:#91a099}.tip kbd{font-size:10px;border:1px solid #e2e8e4;background:white;border-radius:4px;padding:2px 4px;font-family:inherit}
+.typing-actions{display:flex;gap:13px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin:19px 0 22px}
+.stat{border:1px solid var(--line);background:#fff;border-radius:13px;padding:15px 17px}.stat small{display:block;color:#8c9793;font-size:11px;font-weight:700;margin-bottom:9px}.stat strong{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}.stat .unit{font-size:11px;color:#a1aaa7;margin-left:3px}
+.nav-actions{display:flex;justify-content:space-between;align-items:center;gap:11px}.nav-buttons{display:flex;gap:9px}
+.primary{display:flex;align-items:center;gap:8px;justify-content:center;min-height:44px;border:1px solid var(--accent);background:var(--accent);color:white;border-radius:12px;padding:11px 18px;font-size:13px;font-weight:800}
+.primary:hover{background:var(--accent-deep)}.secondary{display:flex;align-items:center;gap:8px;justify-content:center;min-height:44px;border:1px solid #dce4df;background:#fff;color:#44534e;border-radius:12px;padding:11px 17px;font-size:13px;font-weight:750}
+.secondary:hover{background:#f6faf7}
+.footer{color:#a0aaa5;font-size:11px;line-height:1.9;text-align:center;margin-top:43px}
+.banner{margin-top:22px;border-radius:13px;padding:17px 19px;display:none;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid #d0e8dc;background:#e9f7ee;color:#276951}
+.banner strong{font-size:14px}.banner p{font-size:12px;margin:4px 0 0;color:#5d8370}
+.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:#243b31;color:#fff;padding:12px 20px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 30px #0002;transition:opacity .18s,transform .18s;z-index:10;max-width:calc(100vw - 35px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.mobile-top{display:none}.no-results{padding:15px 8px;color:#9fa9a4;font-size:12px;line-height:1.6}
+@media(max-width:1050px){.app{grid-template-columns:260px minmax(0,1fr)}.sidebar{padding:22px 14px}.main{padding:26px 28px 64px}.topbar{margin-bottom:34px}}
+@media(max-width:760px){.app{display:block}.sidebar{display:none;position:fixed;top:59px;bottom:0;left:0;height:auto;width:min(340px,90vw);z-index:20;box-shadow:40px 0 80px rgba(20,40,32,.12)}.sidebar.open{display:flex}.app.menu-open:before{content:'';position:fixed;inset:0;background:#1c33278a;z-index:15}.mobile-top{position:sticky;display:flex;top:0;z-index:12;background:#fcfcfa;border-bottom:1px solid var(--line);align-items:center;justify-content:space-between;padding:10px 16px;height:60px}.mobile-top .mobile-name{font-weight:850;letter-spacing:-.3px}.main{padding:25px 18px 60px}.topbar{margin-bottom:24px}.topbar-right .ghost{min-height:33px}.page-head h2{font-size:27px}.page-head .sub{font-size:12px}.panelhead{padding:14px 16px}.source-body{padding:19px 18px 24px;line-height:2.05;font-size:var(--font-size)}.typing-wrap{padding:0 14px 17px}#typing{min-height:185px;padding:13px 15px}.stats{grid-template-columns:repeat(2,1fr);gap:9px}.stat{padding:12px 14px}.stat strong{font-size:19px}.nav-actions{flex-wrap:wrap}.nav-buttons{width:100%}.nav-buttons button{flex:1}.tip kbd{display:none}.topbar-left{font-size:11px}.footer{margin-top:30px}.banner{margin-top:15px}}
+@media(max-width:380px){.topbar{align-items:flex-start;flex-direction:column;gap:10px}.page-head h2{font-size:24px}.panel-title{font-size:12px}.ghost{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+[hidden]{display:none!important}
+.docs-card{padding:14px;display:flex;flex-direction:column;gap:11px}
+.docs-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.docs-heading strong{font-size:12px;color:#596761}
+.docs-heading button{font-size:12px;border:0;background:var(--accent-soft);color:var(--accent-deep);padding:7px 10px;border-radius:9px;font-weight:800}
+.doc-select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 10px;font-size:12px;color:#324a40;background:white;min-width:0;outline-offset:2px}
+.doc-tools{display:flex;gap:8px}
+.doc-tools button{flex:1;min-height:32px;border:1px solid var(--line);background:#fafcfb;color:#677770;font-size:11px;border-radius:8px;font-weight:700}
+.doc-tools button:hover{color:var(--accent-deep);border-color:#bfd7cb}
+.main .topbar-right .primary{min-height:35px;border-radius:10px;padding:8px 12px;font-size:12px}
+.empty-state{padding:50px 27px;max-width:880px;margin:50px auto;text-align:center}
+.empty-glyph{width:70px;height:70px;border-radius:22px;display:grid;place-items:center;background:var(--accent-soft);font-size:31px;margin:0 auto 24px}
+.empty-state h2{margin:0;color:#27392e;font-size:27px;letter-spacing:-1px}
+.empty-state p{font-size:14px;color:#7b8880;line-height:1.9;max-width:470px;margin:17px auto 23px}
+.empty-state .primary{display:inline-flex;min-width:175px}
+.empty-howto{display:flex;justify-content:center;gap:10px;margin:27px auto 0;flex-wrap:wrap}
+.empty-howto span{padding:8px 11px;font-size:11px;border:1px solid var(--line);border-radius:9px;color:#83938a}
+#editor-dialog{border:1px solid #dce6df;border-radius:20px;padding:0;width:min(780px,calc(100vw - 24px));max-height:min(92vh,900px);overflow:auto;background:#fff;color:var(--ink);box-shadow:0 28px 100px #12291d42}
+#editor-dialog::backdrop{background:#172e2580;backdrop-filter:blur(2px)}
+.editor-head{display:flex;align-items:center;justify-content:space-between;padding:23px 27px;border-bottom:1px solid #e9eeea}
+.editor-head h2{margin:0;font-size:19px;letter-spacing:-.5px}
+.editor-head p{margin:5px 0 0;font-size:12px;color:#85938b}
+.editor-close{width:31px;height:31px;border:0;border-radius:8px;background:#f3f6f4;color:#57645c;font-size:20px}
+.editor-body{padding:22px 27px 24px}
+.editor-label{display:block;font-size:12px;font-weight:800;color:#405248;margin:0 0 8px}
+.editor-field{width:100%;border:1px solid #dce5df;background:#fbfcfa;color:#2c3e35;border-radius:11px;padding:12px 14px;outline:0}
+.editor-field:focus{border-color:var(--accent);box-shadow:0 0 0 3px #e0f0e7}
+.editor-grid{display:grid;grid-template-columns:1fr 230px;gap:13px;margin-bottom:19px}
+#editor-text{font-family:'Noto Serif KR','Nanum Myeongjo','Batang',serif;font-size:15px;line-height:1.8;resize:vertical;min-height:300px}
+.editor-info{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:#829189;line-height:1.6}
+#editor-warning{font-size:12px;color:#b54c42;font-weight:700;margin:12px 0 0}
+.editor-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #ebefec;padding:16px 27px}
+.editor-foot small{font-size:11px;color:#8b998f;line-height:1.6;max-width:390px}
+.editor-buttons{display:flex;gap:9px;flex-shrink:0}
+.editor-foot button{min-height:40px}
+@media(max-width:760px){.main .topbar-right .primary{padding:8px 10px}.empty-state{margin:22px 0;padding:39px 14px}.empty-state h2{font-size:22px}.editor-grid{grid-template-columns:1fr}.editor-head{padding:18px}.editor-body{padding:17px}.editor-foot{padding:15px 17px;flex-wrap:wrap}.editor-foot small{width:100%}.editor-buttons{width:100%}.editor-buttons button{flex:1}.editor-head h2{font-size:18px}#editor-text{min-height:240px}}
+</style>
+</head>
+<body>
+
+<div id="app" class="app">
+ <header class="mobile-top">
+  <button id="menu-toggle" class="ghost" type="button" aria-label="문단 목록 열기">☰ &nbsp;목록</button>
+  <div class="mobile-name">✍️ 나만의 필사 노트</div>
+  <button id="mobile-new" class="ghost" type="button">+ 원문</button>
+ </header>
+ <aside class="sidebar" id="sidebar" aria-label="필사 글과 문단 목록">
+  <div class="brand"><div class="brand-icon">✍</div><div><h1>나만의 필사 노트</h1><p>PASTE · READ · TYPE</p></div></div>
+  <section class="aside-card docs-card" aria-label="내가 등록한 글">
+   <div class="docs-heading"><strong>내 필사 글</strong><button type="button" id="doc-add">+ 새 글</button></div>
+   <select id="doc-select" class="doc-select" aria-label="필사 글 선택"><option value="">글을 추가해 주세요</option></select>
+   <div class="doc-tools"><button type="button" id="doc-edit">원문 수정</button><button type="button" id="doc-delete">글 삭제</button></div>
+  </section>
+  <section class="aside-card" aria-label="현재 글의 진행률">
+   <div class="aside-heading">현재 글의 학습 현황</div>
+   <div class="bigprogress"><strong id="overall-pct">0%</strong><span><span id="overall-done">0</span> / <span id="overall-total">0</span> 문단 완료</span></div>
+   <div class="track"><i id="overall-bar"></i></div>
+   <div style="color:#8a9690;font-size:10px;margin-top:10px">완료 기준: 원문 글자 수만큼 직접 입력</div>
+  </section>
+  <input type="search" id="search" class="sidebar-search" placeholder="문단 내용 검색..." aria-label="문단 검색" />
+  <div class="side-heading"><span>목차</span><span id="sidebar-count">0 PARAS</span></div>
+  <nav id="nav" aria-label="필사 문단 선택"></nav>
+  <div class="aside-bottom">
+   <strong style="color:#52645b">개인 텍스트와 필사 기록은 이 브라우저에만 저장됩니다.</strong><br/>다른 기기와 자동 동기화되지 않으니 중요한 기록은 백업해 주세요.<br/>
+   <button id="export-data" type="button">현재 글 필사 기록 내보내기 ↗</button><br/>
+   <button id="export-all" type="button">모든 글과 기록 백업(.json) ↗</button><br/>
+   <button id="restore-all" type="button">백업 파일 불러오기 ↗</button>
+   <input id="restore-input" type="file" accept="application/json,.json" hidden />
+  </div>
+ </aside>
+ <main class="main">
+  <div class="topbar">
+   <div class="topbar-left"><span>나의 글</span><span class="slash">/</span><span id="crumb-chapter">필사 시작하기</span></div>
+   <div class="topbar-right">
+    <button class="ghost" id="font-minus" type="button" title="글자 작게">A−</button>
+    <button class="ghost" id="font-plus" type="button" title="글자 크게">A+</button>
+    <button class="ghost" id="toggle-source-top" type="button">원문 숨기기</button>
+    <button class="primary" id="new-top" type="button">+ 텍스트 추가</button>
+   </div>
+  </div>
+  <section id="empty-screen" class="panel empty-state">
+   <div class="empty-glyph">✍️</div>
+   <h2>읽고 싶은 글을<br/>필사 연습장으로 만들어 보세요.</h2>
+   <p>책의 문장, 강의 자료, 에세이, 시험 답안을 복사해 붙여넣으면 문단별 또는 문장별로 나누어 바로 필사할 수 있어요.</p>
+   <button class="primary" id="empty-new" type="button">+ 첫 번째 글 추가하기 →</button>
+   <div class="empty-howto"><span>① 텍스트 붙여넣기</span><span>② 분리 방식 선택</span><span>③ 필사 시작</span></div>
+  </section>
+  <div id="practice-area" hidden>
+   <section class="page-head">
+    <div class="eyebrow">YOUR PERSONAL TYPING NOTEBOOK</div>
+    <h2 id="chapter-title">나만의 필사 글</h2>
+    <p class="sub">원문을 읽으며 직접 타이핑해 보세요.<br/>오타 검사 없이 편하게 쓰고, 학습 기록은 자동으로 저장됩니다.</p>
+   </section>
+   <div class="lesson-meta">
+    <span class="source-badge" id="paragraph-indicator">문단 01 / 01</span>
+    <span class="source-badge" id="source-name">내가 추가한 글</span>
+    <span class="source-badge" id="target-count">원문 0자</span>
+   </div>
+   <section class="panel" aria-label="필사 원문">
+    <div class="panelhead"><div class="panel-title"><span class="round-number">01</span><span>필사 원문</span></div>
+     <div class="panel-actions"><button class="textlink" id="copy-original" type="button">원문 복사</button><button class="textlink" id="toggle-source" type="button">숨기기</button></div>
+    </div>
+    <div id="source-text" class="source-body"></div>
+   </section>
+   <section class="panel typing-panel" aria-label="필사 입력">
+    <div class="panelhead"><div class="panel-title"><span class="round-number">✎</span><span>나의 필사</span></div>
+     <div class="panel-actions"><button class="textlink" id="clear-current" type="button">현재 문단 지우기</button></div>
+    </div>
+    <div class="typing-wrap">
+     <textarea id="typing" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="필사할 내용을 입력하세요" placeholder="원문을 보며 자유롭게 타이핑해 보세요. 오타 검사는 하지 않습니다."></textarea>
+     <div class="typing-bottom"><div class="tip">자동 저장 · <kbd>Ctrl</kbd> + <kbd>Enter</kbd> 다음 문단</div><div class="typing-actions"><span id="save-status" style="font-size:11px;color:#91a099" aria-live="polite">준비됨</span></div></div>
+    </div>
+   </section>
+   <section class="stats" aria-label="현재 문단 작성 현황">
+    <div class="stat"><small>입력한 글자</small><strong id="typed-count">0</strong><span class="unit" id="typed-total">/ 0</span></div>
+    <div class="stat"><small>이번 문단 진행률</small><strong id="para-progress">0</strong><span class="unit">%</span></div>
+   </section>
+   <div class="nav-actions">
+    <button class="secondary" id="prev" type="button">← 이전 문단</button>
+    <div class="nav-buttons"><button class="secondary" id="show-answer" type="button">원문 보기</button><button class="primary" id="next" type="button">다음 문단 →</button></div>
+   </div>
+   <div id="completion" class="banner">
+    <div><strong>✓ 이 문단 분량을 모두 채웠어요!</strong><p>원하는 만큼 다듬거나 다음 문단으로 이동하세요.</p></div>
+    <button class="primary" id="complete-next" type="button">다음 문단으로 →</button>
+   </div>
+  </div>
+  <footer class="footer">이 페이지는 텍스트를 서버로 전송하지 않습니다. 이 브라우저의 저장 공간에만 기록됩니다.<br/>개인 글과 필사 기록은 다른 브라우저나 기기에 자동으로 공유되지 않습니다.</footer>
+ </main>
+</div>
+<dialog id="editor-dialog" aria-labelledby="editor-heading">
+ <div class="editor-head">
+  <div><h2 id="editor-heading">새 필사 글 만들기</h2><p>원문을 붙여넣으면 자동으로 필사 문단을 구성합니다.</p></div>
+  <button type="button" id="editor-close" class="editor-close" aria-label="닫기">×</button>
+ </div>
+ <form id="editor-form">
+  <div class="editor-body">
+   <div class="editor-grid">
+    <div><label class="editor-label" for="editor-title">글 제목</label><input class="editor-field" id="editor-title" maxlength="120" placeholder="예: 논문자격시험 모범답안" /></div>
+    <div><label class="editor-label" for="split-mode">필사 단위</label>
+     <select id="split-mode" class="editor-field">
+      <option value="paragraph">문단별 · 빈 줄 기준</option>
+      <option value="sentence">한 문장씩</option>
+      <option value="line">한 줄씩</option>
+     </select>
+    </div>
+   </div>
+   <label class="editor-label" for="editor-text">필사할 원문 붙여넣기</label>
+   <textarea class="editor-field" id="editor-text" spellcheck="false" autocapitalize="off" placeholder="복사한 본문을 여기에 붙여넣으세요.&#10;&#10;빈 줄로 구분된 부분은 각 문단이 됩니다. 문장별·줄별로도 나눌 수 있어요."></textarea>
+   <div class="editor-info"><span id="preview-info">원문을 붙여넣어 주세요.</span><span>최대 240,000자 · 1,500단위</span></div>
+   <div id="editor-warning" role="alert" hidden></div>
+  </div>
+  <div class="editor-foot">
+   <small>원문과 입력 기록은 이 브라우저에만 보관됩니다. 분리 방식을 바꾸면 문단 구성이 달라질 수 있어요.</small>
+   <div class="editor-buttons"><button class="secondary" id="editor-cancel" type="button">취소</button><button class="primary" type="submit" id="editor-save">저장하고 필사 시작 →</button></div>
+  </div>
+ </form>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+
+'use strict';
+const KEY='personal-typing-notebook-v1';
+const MAX_CHARS=240000;
+const MAX_UNITS=1500;
+const el=id=>document.getElementById(id);
+const escapeHTML=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
+const charCount=s=>String(s||'').length;
+const uniqueId=()=>typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():'doc-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+const labelForMode=mode=>({paragraph:'문단별',sentence:'문장별',line:'줄별'})[mode]||'문단별';
+const modeValid=m=>['paragraph','sentence','line'].includes(m)?m:'paragraph';
+function normalized(s){return String(s||'').replace(/\r\n?/g,'\n').trim();}
+function splitText(raw,mode){
+ const content=normalized(raw);
+ if(!content)return [];
+ if(mode==='line')return content.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+ const chunks=content.split(/\n[ \t]*\n+/).map(s=>s.trim().replace(/[ \t]*\n[ \t]*/g,' ').replace(/[ \t]{2,}/g,' ')).filter(Boolean);
+ if(mode!=='sentence')return chunks;
+ const result=[];
+ const segmenter=typeof Intl.Segmenter==='function'?new Intl.Segmenter('ko',{granularity:'sentence'}):null;
+ for(const chunk of chunks){
+  if(segmenter){for(const seg of segmenter.segment(chunk)){const v=seg.segment.trim();if(v)result.push(v);}}
+  else {for(const v of chunk.split(/(?<=[.!?。！？])\s+/)){if(v.trim())result.push(v.trim());}}
+ }
+ return result;
+}
+function cleanDoc(doc){
+ if(!doc||typeof doc.raw!=='string')return null;
+ const raw=normalized(doc.raw);
+ if(!raw||raw.length>MAX_CHARS)return null;
+ const pieces=splitText(raw,modeValid(doc.mode));
+ if(!pieces.length||pieces.length>MAX_UNITS)return null;
+ const drafts={};
+ if(doc.drafts&&typeof doc.drafts==='object'){
+  for(const [i,v] of Object.entries(doc.drafts)){
+   if(/^\d+$/.test(i)&&Number(i)<pieces.length&&typeof v==='string'&&v)drafts[i]=v.slice(0,MAX_CHARS);
+  }
+ }
+ return {id:String(doc.id||uniqueId()),title:String(doc.title||'제목 없는 글').slice(0,120),raw,mode:modeValid(doc.mode),drafts,index:Math.min(pieces.length-1,Math.max(0,Number(doc.index)||0)),created:Number(doc.created)||Date.now(),updated:Number(doc.updated)||Date.now()};
+}
+function loadStore(){
+ try{
+  const v=JSON.parse(localStorage.getItem(KEY)||'null');
+  if(!v||!Array.isArray(v.docs))throw Error('empty');
+  const docs=v.docs.slice(0,40).map(cleanDoc).filter(Boolean);
+  const id=docs.some(d=>d.id===v.activeId)?v.activeId:docs[0]?.id||null;
+  return {docs,activeId:id,font:Math.max(15,Math.min(27,Number(v.font)||19))};
+ }catch{return {docs:[],activeId:null,font:19};}
+}
+const state=loadStore();
+let passages=[],typedLengths=[],completeCount=0,hiddenSource=false;
+let saveTimer=0,uiFrame=0,previewTimer=0,editingId=null;
+const currentDoc=()=>state.docs.find(d=>d.id===state.activeId)||null;
+const typed=i=>currentDoc()?.drafts?.[i]||'';
+const done=i=>passages.length>0&&typedLengths[i]>=passages[i].length;
+const percent=i=>passages.length?Math.min(100,Math.round(typedLengths[i]*100/Math.max(1,passages[i].length))):0;
+function toast(message){
+ const t=el('toast');t.textContent=message;t.classList.add('show');clearTimeout(toast.timer);
+ toast.timer=setTimeout(()=>t.classList.remove('show'),2400);
+}
+function saveNow(){
+ clearTimeout(saveTimer);saveTimer=0;
+ try{
+  localStorage.setItem(KEY,JSON.stringify(state));
+  el('save-status').textContent='✓ 자동 저장됨';
+  return true;
+ }catch{
+  el('save-status').textContent='저장 공간 부족 · 백업하세요';
+  toast('브라우저 저장 공간이 부족합니다. 기록을 백업해 주세요.');
+  return false;
+ }
+}
+function queueSave(){
+ el('save-status').textContent='저장 중…';
+ clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,850);
+}
+function rebuild(){
+ const doc=currentDoc();
+ passages=doc?splitText(doc.raw,doc.mode):[];
+ typedLengths=doc?passages.map((p,i)=>charCount(doc.drafts[i]||'')):[];
+ completeCount=typedLengths.filter((n,i)=>n>=passages[i].length).length;
+ if(doc)doc.index=Math.max(0,Math.min(passages.length-1,doc.index||0));
+}
+function closeMenu(){el('sidebar').classList.remove('open');el('app').classList.remove('menu-open');}
+function renderDocumentSelect(){
+ const select=el('doc-select');select.replaceChildren();
+ if(state.docs.length===0){select.add(new Option('글을 추가해 주세요',''));}
+ else for(const doc of state.docs){select.add(new Option(doc.title,doc.id));}
+ select.value=currentDoc()?.id||'';
+ el('doc-edit').disabled=!currentDoc();
+ el('doc-delete').disabled=!currentDoc();
+ el('search').disabled=!currentDoc();
+ el('toggle-source-top').disabled=!currentDoc();
+}
+function renderNav(){
+ const nav=el('nav'),q=el('search').value.trim().toLocaleLowerCase(),doc=currentDoc();
+ if(!doc){nav.textContent='';el('sidebar-count').textContent='0 PARAS';return;}
+ const matches=[];
+ passages.forEach((p,i)=>{if(!q||p.toLocaleLowerCase().includes(q)||doc.title.toLocaleLowerCase().includes(q))matches.push(i);});
+ let html='<div class="chapter"><div class="chapter-title">'+escapeHTML(doc.title)+'<small>'+matches.length+'문단</small></div>';
+ for(const i of matches){
+  const complete=done(i);
+  html+='<button type="button" class="item '+(i===doc.index?'active ':'')+(complete?'done':'')+'" data-idx="'+i+'" '+(i===doc.index?'aria-current="step"':'')+'><span class="item-index">'+(complete?'✓':String(i+1).padStart(2,'0'))+'</span><span class="item-label">'+escapeHTML(passages[i].slice(0,24))+(passages[i].length>24?'…':'')+'</span><small>'+percent(i)+'%</small></button>';
+ }
+ html+='</div>';
+ nav.innerHTML=matches.length?html:'<div class="no-results">일치하는 문단이 없습니다.</div>';
+ el('sidebar-count').textContent=matches.length+' PARAS';
+}
+function updateActiveNav(){
+ const doc=currentDoc();if(!doc)return;
+ const b=el('nav').querySelector('button[data-idx="'+doc.index+'"]');if(!b)return;
+ const complete=done(doc.index);
+ b.classList.toggle('done',complete);
+ b.querySelector('.item-index').textContent=complete?'✓':String(doc.index+1).padStart(2,'0');
+ b.querySelector('small').textContent=percent(doc.index)+'%';
+}
+function renderSource(){
+ const node=el('source-text');
+ node.classList.toggle('hidden',hiddenSource);
+ const doc=currentDoc();
+ node.textContent=hiddenSource?'원문을 숨겼습니다. 기억을 떠올리며 입력해 보세요.':doc?passages[doc.index]:'';
+ el('toggle-source').textContent=hiddenSource?'보이기':'숨기기';
+ el('toggle-source-top').textContent=hiddenSource?'원문 보기':'원문 숨기기';
+}
+function renderStats(){
+ const doc=currentDoc(),i=doc?.index||0;
+ el('typed-count').textContent=doc?typedLengths[i]:0;
+ el('typed-total').textContent='/ '+(doc?passages[i].length:0);
+ el('para-progress').textContent=doc?percent(i):0;
+ el('completion').style.display=doc&&done(i)?'flex':'none';
+ const pct=passages.length?Math.round(100*completeCount/passages.length):0;
+ el('overall-pct').textContent=pct+'%';
+ el('overall-done').textContent=completeCount;
+ el('overall-total').textContent=passages.length;
+ el('overall-bar').style.width=pct+'%';
+}
+function renderPage(){
+ const doc=currentDoc();
+ el('empty-screen').hidden=!!doc;el('practice-area').hidden=!doc;
+ el('crumb-chapter').textContent=doc?.title||'필사 시작하기';
+ document.documentElement.style.setProperty('--font-size',state.font+'px');
+ if(!doc){el('overall-pct').textContent='0%';el('overall-done').textContent='0';el('overall-total').textContent='0';el('overall-bar').style.width='0%';renderNav();renderDocumentSelect();return;}
+ const i=doc.index;
+ el('chapter-title').textContent=doc.title;
+ el('paragraph-indicator').textContent='문단 '+String(i+1).padStart(2,'0')+' / '+passages.length;
+ el('source-name').textContent=labelForMode(doc.mode)+' 필사';
+ el('target-count').textContent='원문 '+passages[i].length+'자';
+ el('typing').value=typed(i);
+ el('prev').disabled=i===0;
+ el('next').textContent=i===passages.length-1?'첫 문단으로 ↺':'다음 문단 →';
+ el('complete-next').textContent=i===passages.length-1?'첫 문단으로 ↺':'다음 문단으로 →';
+ el('save-status').textContent=typed(i)?'✓ 자동 저장됨':'입력 대기 중';
+ renderSource();renderStats();renderDocumentSelect();renderNav();
+}
+function renderApp(){rebuild();renderPage();closeMenu();}
+function goTo(i,focus=false){
+ const doc=currentDoc();if(!doc)return;
+ if(saveTimer)saveNow();
+ doc.index=Math.max(0,Math.min(passages.length-1,i));hiddenSource=false;
+ renderPage();saveNow();closeMenu();
+ if(focus)el('typing').focus({preventScroll:true});
+ window.scrollTo({top:0,behavior:'instant'});
+}
+function goNext(focus=false){
+ const doc=currentDoc();if(doc)goTo(doc.index===passages.length-1?0:doc.index+1,focus);
+}
+function toggleSource(value){
+ if(!currentDoc())return;
+ hiddenSource=typeof value==='boolean'?value:!hiddenSource;
+ renderSource();
+}
+function onTyping(){
+ uiFrame=0;renderStats();updateActiveNav();
+}
+el('typing').addEventListener('input',event=>{
+ const doc=currentDoc();if(!doc)return;
+ const i=doc.index,wasDone=done(i),value=event.currentTarget.value;
+ doc.drafts[i]=value;typedLengths[i]=charCount(value);
+ const isDone=done(i);
+ if(wasDone!==isDone)completeCount+=isDone?1:-1;
+ doc.updated=Date.now();queueSave();
+ if(!uiFrame)uiFrame=requestAnimationFrame(onTyping);
+});
+el('typing').addEventListener('blur',()=>{if(saveTimer)saveNow();});
+window.addEventListener('pagehide',()=>{if(saveTimer)saveNow();});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&saveTimer)saveNow();});
+el('typing').addEventListener('keydown',e=>{
+ if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();goNext(true);}
+ else if(e.altKey&&e.key==='ArrowLeft'){e.preventDefault();goTo(currentDoc().index-1,true);}
+ else if(e.altKey&&e.key==='ArrowRight'){e.preventDefault();goNext(true);}
+});
+el('menu-toggle').onclick=()=>{const on=el('sidebar').classList.toggle('open');el('app').classList.toggle('menu-open',on);};
+el('app').addEventListener('click',e=>{if(e.target===el('app'))closeMenu();});
+el('nav').addEventListener('click',e=>{const b=e.target.closest('button[data-idx]');if(b)goTo(Number(b.dataset.idx));});
+el('search').addEventListener('input',renderNav);
+el('doc-select').addEventListener('change',e=>{
+ if(saveTimer)saveNow();
+ state.activeId=e.target.value;hiddenSource=false;
+ el('search').value='';renderApp();saveNow();
+});
+el('prev').onclick=()=>goTo(currentDoc().index-1);
+el('next').onclick=()=>goNext();
+el('complete-next').onclick=()=>goNext();
+el('toggle-source').onclick=()=>toggleSource();
+el('toggle-source-top').onclick=()=>toggleSource();
+el('show-answer').onclick=()=>{toggleSource(false);el('source-text').scrollIntoView({behavior:'auto',block:'center'});};
+el('clear-current').onclick=()=>{
+ const doc=currentDoc();if(!doc||!typed(doc.index))return;
+ if(confirm('이 문단의 입력 내용만 지울까요?')){
+  const i=doc.index;if(done(i))completeCount--;
+  delete doc.drafts[i];typedLengths[i]=0;saveNow();renderPage();el('typing').focus();toast('현재 문단의 필사를 지웠습니다.');
+ }
+};
+el('font-minus').onclick=()=>{state.font=Math.max(15,state.font-1);document.documentElement.style.setProperty('--font-size',state.font+'px');queueSave();};
+el('font-plus').onclick=()=>{state.font=Math.min(27,state.font+1);document.documentElement.style.setProperty('--font-size',state.font+'px');queueSave();};
+el('copy-original').onclick=async()=>{
+ try{await navigator.clipboard.writeText(passages[currentDoc().index]);toast('원문을 복사했어요.');}
+ catch{const ta=document.createElement('textarea');ta.value=passages[currentDoc().index];document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('원문을 복사했어요.');}
+};
+function download(content,file,type){
+ const blob=new Blob([content],{type:type||'text/plain;charset=utf-8'}),a=document.createElement('a');
+ a.href=URL.createObjectURL(blob);a.download=file;a.click();
+ setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+const safeFile=s=>String(s).replace(/[\\/:*?"<>|]/g,'_').slice(0,70);
+el('export-data').onclick=()=>{
+ const doc=currentDoc();if(!doc){toast('내보낼 글을 먼저 추가해 주세요.');return;}
+ if(saveTimer)saveNow();
+ const paras=splitText(doc.raw,doc.mode);
+ const lines=['제목: '+doc.title,'분리 방식: '+labelForMode(doc.mode),'','총 '+paras.length+'문단',''];
+ paras.forEach((p,i)=>{lines.push('['+(i+1)+'] 원문',p,'','['+(i+1)+'] 나의 필사',doc.drafts[i]||'(미입력)','','--------------------------------','');});
+ download(lines.join('\n'),safeFile(doc.title)+'_필사기록.txt');
+ toast('현재 글을 내보냈습니다.');
+};
+el('export-all').onclick=()=>{
+ if(saveTimer)saveNow();
+ if(!state.docs.length){toast('백업할 글이 없습니다.');return;}
+ download(JSON.stringify({format:'personal-typing-notebook',version:1,exportedAt:new Date().toISOString(),...state},null,2),'나만의_필사노트_전체백업.json','application/json;charset=utf-8');
+ toast('전체 글과 필사 기록을 백업했어요.');
+};
+el('restore-all').onclick=()=>el('restore-input').click();
+el('restore-input').onchange=async e=>{
+ const file=e.target.files?.[0];e.target.value='';if(!file)return;
+ try{
+  if(file.size>6000000)throw Error('백업 파일 용량이 너무 큽니다.');
+  const raw=JSON.parse(await file.text());
+  if(raw.format!=='personal-typing-notebook'||!Array.isArray(raw.docs))throw Error('이 앱에서 만든 백업 파일이 아닙니다.');
+  if(raw.docs.length>40)throw Error('한 번에 최대 40개 글까지 복원할 수 있습니다.');
+  const docs=raw.docs.map(cleanDoc);
+  if(docs.some(d=>!d)||docs.some((d,i)=>docs.findIndex(x=>x.id===d.id)!==i))throw Error('일부 글의 데이터 형식이나 길이가 올바르지 않습니다.');
+  if(!confirm('현재 저장된 '+state.docs.length+'개 글과 기록을 백업 내용으로 모두 바꿀까요?'))return;
+  state.docs=docs;state.activeId=docs.some(d=>d.id===raw.activeId)?raw.activeId:docs[0]?.id||null;
+  state.font=Math.min(27,Math.max(15,Number(raw.font)||19));hiddenSource=false;
+  el('search').value='';renderApp();saveNow();toast('백업을 복원했습니다.');
+ }catch(err){toast('복원 실패: '+err.message);}
+};
+const editor=el('editor-dialog');
+function showEditor(doc=null){
+ if(saveTimer)saveNow();
+ editingId=doc?.id||null;
+ el('editor-heading').textContent=doc?'필사 원문 수정':'새 필사 글 만들기';
+ el('editor-title').value=doc?.title||'';
+ el('editor-text').value=doc?.raw||'';
+ el('split-mode').value=doc?.mode||'paragraph';
+ el('editor-save').textContent=doc?'변경사항 저장 →':'저장하고 필사 시작 →';
+ el('editor-warning').hidden=true;el('editor-warning').textContent='';
+ closeMenu();
+ editor.showModal();
+ updatePreview();
+}
+function closeEditor(){editor.close();editingId=null;}
+function updatePreview(){
+ const raw=el('editor-text').value;
+ const n=charCount(raw);
+ if(n>MAX_CHARS){el('preview-info').textContent=n.toLocaleString()+'자 · 최대 '+MAX_CHARS.toLocaleString()+'자까지 등록할 수 있어요.';return;}
+ const units=splitText(raw,el('split-mode').value);
+ el('preview-info').textContent=n.toLocaleString()+'자 · '+units.length.toLocaleString()+'개 '+(el('split-mode').value==='sentence'?'문장':el('split-mode').value==='line'?'줄':'문단');
+}
+function queuePreview(){clearTimeout(previewTimer);previewTimer=setTimeout(updatePreview,200);}
+function preserveDrafts(oldDoc,newParts,mode){
+ const oldParts=splitText(oldDoc.raw,oldDoc.mode),nextDrafts={},used=new Set();
+ for(let i=0;i<newParts.length;i++){
+  if(oldParts[i]===newParts[i]&&oldDoc.drafts[i]){nextDrafts[i]=oldDoc.drafts[i];used.add(i);}
+ }
+ const bucket=new Map();
+ oldParts.forEach((part,i)=>{
+  if(used.has(i)||!oldDoc.drafts[i])return;
+  if(!bucket.has(part))bucket.set(part,[]);
+  bucket.get(part).push(oldDoc.drafts[i]);
+ });
+ newParts.forEach((part,i)=>{
+  if(nextDrafts[i])return;
+  const arr=bucket.get(part);if(arr?.length)nextDrafts[i]=arr.shift();
+ });
+ return nextDrafts;
+}
+function saveEditor(){
+ const raw=normalized(el('editor-text').value),mode=modeValid(el('split-mode').value);
+ const title=el('editor-title').value.trim()||'제목 없는 글';
+ const parts=splitText(raw,mode);
+ const warning=el('editor-warning');
+ warning.hidden=true;warning.textContent='';
+ if(!raw){warning.textContent='필사할 원문을 붙여넣어 주세요.';warning.hidden=false;return;}
+ if(raw.length>MAX_CHARS){warning.textContent='너무 긴 글입니다. '+MAX_CHARS.toLocaleString()+'자 이내로 나누어 등록해 주세요.';warning.hidden=false;return;}
+ if(parts.length>MAX_UNITS){warning.textContent='문단이 너무 많습니다. 최대 '+MAX_UNITS.toLocaleString()+'개 단위로 나누어 등록해 주세요.';warning.hidden=false;return;}
+ const old=state.docs.find(d=>d.id===editingId);
+ if(old){
+  const drafts=preserveDrafts(old,parts,mode);
+  const lost=Object.values(old.drafts).filter(Boolean).length-Object.values(drafts).filter(Boolean).length;
+  if(lost>0&&!confirm('원문이나 분리 방식 변경으로 '+lost+'개 문단의 필사 기록을 유지할 수 없습니다. 그래도 저장할까요?'))return;
+  old.title=title.slice(0,120);old.raw=raw;old.mode=mode;old.drafts=drafts;
+  old.index=Math.min(Math.max(0,old.index),parts.length-1);old.updated=Date.now();
+  state.activeId=old.id;
+ }else{
+  if(state.docs.length>=40){warning.textContent='최대 40개 글까지 보관할 수 있습니다. 기존 글을 백업하거나 삭제해 주세요.';warning.hidden=false;return;}
+  const now=Date.now();
+  const doc={id:uniqueId(),title:title.slice(0,120),raw,mode,drafts:{},index:0,created:now,updated:now};
+  state.docs.unshift(doc);state.activeId=doc.id;
+ }
+ hiddenSource=false;el('search').value='';
+ closeEditor();renderApp();saveNow();toast('필사 글이 준비됐습니다!');
+ el('typing').focus({preventScroll:true});
+}
+el('editor-form').addEventListener('submit',e=>{e.preventDefault();saveEditor();});
+el('editor-close').onclick=closeEditor;
+el('editor-cancel').onclick=closeEditor;
+el('editor-text').addEventListener('input',queuePreview);
+el('split-mode').addEventListener('change',updatePreview);
+el('doc-add').onclick=()=>showEditor();
+el('new-top').onclick=()=>showEditor();
+el('mobile-new').onclick=()=>showEditor();
+el('empty-new').onclick=()=>showEditor();
+el('doc-edit').onclick=()=>{const doc=currentDoc();if(doc)showEditor(doc);};
+el('doc-delete').onclick=()=>{
+ const doc=currentDoc();if(!doc)return;
+ if(!confirm('「'+doc.title+'」의 원문과 필사 기록을 모두 삭제할까요? 이 작업은 되돌릴 수 없습니다.'))return;
+ if(saveTimer)saveNow();
+ state.docs=state.docs.filter(d=>d.id!==doc.id);
+ state.activeId=state.docs[0]?.id||null;hiddenSource=false;el('search').value='';
+ renderApp();saveNow();toast('선택한 글을 삭제했습니다.');
+};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+renderApp();
+
+</script>
+</body>
+</html>
